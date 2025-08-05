@@ -2,22 +2,22 @@
  * Utility functions for the design system
  */
 
-import { DesignTokens, ColorTokens } from '../tokens/design-tokens';
+import { DesignTokens, getOptimalTextColor, getLuminance, getContrastRatio, addOpacity, darken, lighten } from '../tokens/design-tokens';
 import { TokenManager } from '../tokens/token-manager';
 
 /**
- * Create a new TokenManager instance with custom tokens
+ * Create a new TokenManager instance
  */
-export function createTokenManager(tokens?: Partial<DesignTokens>): TokenManager {
-  return new TokenManager(tokens);
+export function createTokenManager(): TokenManager {
+  return new TokenManager();
 }
 
 /**
  * Generate CSS custom properties from design tokens
  */
-export function generateCSSCustomProperties(tokens: DesignTokens): string {
-  const manager = new TokenManager(tokens);
-  return manager.toCSSCustomProperties();
+export function generateCSSCustomProperties(): string {
+  const manager = new TokenManager();
+  return manager.generateCSSString();
 }
 
 /**
@@ -35,14 +35,56 @@ export function hexToRgb(hex: string): { r: number; g: number; b: number } | nul
 }
 
 /**
- * Get color value from color scale
+ * Calculate color luminance
  */
-export function getColorValue(colors: ColorTokens, colorName: keyof ColorTokens, shade: number): string {
-  const colorScale = colors[colorName];
-  if (typeof colorScale === 'object' && colorScale !== null) {
-    return (colorScale as any)[shade] || '';
-  }
-  return typeof colorScale === 'string' ? colorScale : '';
+export function calculateLuminance(hex: string): number {
+  return getLuminance(hex);
+}
+
+/**
+ * Get optimal text color for background
+ */
+export function getOptimalText(backgroundColor: string): string {
+  return getOptimalTextColor(backgroundColor);
+}
+
+/**
+ * Calculate contrast ratio between two colors
+ */
+export function calculateContrastRatio(color1: string, color2: string): number {
+  return getContrastRatio(color1, color2);
+}
+
+/**
+ * Add opacity to a hex color
+ */
+export function withOpacity(hex: string, opacity: number): string {
+  return addOpacity(hex, opacity);
+}
+
+/**
+ * Darken a hex color
+ */
+export function darkenColor(hex: string, amount: number): string {
+  return darken(hex, amount);
+}
+
+/**
+ * Lighten a hex color
+ */
+export function lightenColor(hex: string, amount: number): string {
+  return lighten(hex, amount);
+}
+
+/**
+ * Get semantic color with automatic contrast
+ */
+export function getSemanticColor(
+  colorName: 'primary' | 'doom' | 'white' | 'critical' | 'warning' | 'success' | 'interactive',
+  variant: 'DEFAULT' | 'foreground' | 'hover' | 'pressed' | 'focus' | 'subtle' | 'muted' | 'emphasis' | '10' | '20' | '30' | '50' | '70' = 'DEFAULT'
+): string {
+  const manager = new TokenManager();
+  return manager.getSemanticColor(colorName, variant);
 }
 
 /**
@@ -62,24 +104,6 @@ export function validateTokens(tokens: Partial<DesignTokens>): boolean {
 }
 
 /**
- * Merge design tokens with defaults
- */
-export function mergeTokens(base: DesignTokens, override: Partial<DesignTokens>): DesignTokens {
-  return {
-    ...base,
-    ...override,
-    colors: { ...base.colors, ...override.colors },
-    typography: { ...base.typography, ...override.typography },
-    spacing: { ...base.spacing, ...override.spacing },
-    shadows: { ...base.shadows, ...override.shadows },
-    borders: { ...base.borders, ...override.borders },
-    transitions: { ...base.transitions, ...override.transitions },
-    breakpoints: { ...base.breakpoints, ...override.breakpoints },
-    zIndex: { ...base.zIndex, ...override.zIndex },
-  };
-}
-
-/**
  * Generate responsive CSS classes
  */
 export function generateResponsiveClasses(
@@ -96,3 +120,54 @@ export function generateResponsiveClasses(
   
   return css;
 }
+
+/**
+ * Create a theme-aware button class
+ */
+export function createThemeButton(colorName: 'primary' | 'doom' | 'white' | 'critical' | 'warning' | 'success' | 'interactive'): Record<string, string> {
+  return {
+    'background-color': `var(--color-${colorName})`,
+    'color': `var(--color-${colorName}-foreground)`,
+    'border': `1px solid var(--color-${colorName})`,
+    'padding': 'var(--spacing-2) var(--spacing-4)',
+    'border-radius': 'var(--border-radius-md)',
+    'font-weight': 'var(--font-weight-medium)',
+    'transition': 'all var(--transition-duration-200) var(--transition-timing-out)',
+    'cursor': 'pointer'
+  };
+}
+
+/**
+ * Create hover state for theme-aware button
+ */
+export function createThemeButtonHover(colorName: 'primary' | 'doom' | 'white' | 'critical' | 'warning' | 'success' | 'interactive'): Record<string, string> {
+  return {
+    'background-color': `var(--color-${colorName}-hover)`,
+    'border-color': `var(--color-${colorName}-hover)`,
+    'transform': 'translateY(-1px)',
+    'box-shadow': 'var(--shadow-md)'
+  };
+}
+
+/**
+ * Create pressed state for theme-aware button
+ */
+export function createThemeButtonPressed(colorName: 'primary' | 'doom' | 'white' | 'critical' | 'warning' | 'success' | 'interactive'): Record<string, string> {
+  return {
+    'background-color': `var(--color-${colorName}-pressed)`,
+    'border-color': `var(--color-${colorName}-pressed)`,
+    'transform': 'translateY(0)',
+    'box-shadow': 'var(--shadow-sm)'
+  };
+}
+
+// Re-export color utilities from design tokens
+export { 
+  hexToRgb as convertHexToRgb,
+  getLuminance,
+  getContrastRatio,
+  getOptimalTextColor,
+  addOpacity,
+  darken,
+  lighten
+} from '../tokens/design-tokens';

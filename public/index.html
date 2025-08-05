@@ -3,625 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎨 Design System - Utility CSS Library</title>
+    <title>Intelligent Theming System Demo</title>
     <style>
         /* Demo-specific styles */
         body {
             margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            line-height: 1.6;
+            padding: 0;
+            background: var(--color-background, #ffffff);
+            color: var(--color-foreground, #09090b);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            font-family: var(--font-family-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
         }
         
         .demo-section {
             margin-bottom: 3rem;
             padding: 2rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.5rem;
-            background: white;
-        }
-        
-        .demo-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #111827;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 0.5rem;
+            border: 1px solid var(--color-border-default, #e4e4e7);
+            border-radius: var(--border-radius-lg, 0.5rem);
+            background: var(--color-surface-card, #ffffff);
+            transition: all 0.3s ease;
         }
         
         .demo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
             margin-top: 1rem;
         }
         
-        .demo-item {
+        .color-demo {
             padding: 1rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.25rem;
-            background: #f9fafb;
+            border-radius: var(--border-radius-md, 0.375rem);
+            text-align: center;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+            cursor: pointer;
         }
         
-        .demo-item code {
-            background: #f3f4f6;
-            padding: 0.125rem 0.25rem;
-            border-radius: 0.125rem;
+        .color-demo:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+        }
+        
+        .theme-controls {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--color-surface-card, #ffffff);
+            padding: 1rem;
+            border: 1px solid var(--color-border-default, #e4e4e7);
+            border-radius: var(--border-radius-lg, 0.5rem);
+            box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+            z-index: 1000;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius-md, 0.375rem);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 0.25rem;
             font-size: 0.875rem;
-            font-family: 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', Consolas, monospace;
         }
         
-        .success { color: #059669; }
-        .working-indicator {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-            margin-right: 6px;
-            animation: pulse 2s infinite;
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        /* Semantic color buttons with automatic contrast */
+        .btn-primary {
+            background-color: var(--color-primary, #6C5CE7);
+            color: var(--color-primary-foreground, #ffffff);
         }
+        
+        .btn-primary:hover {
+            background-color: var(--color-primary-hover, #5a4fcf);
+        }
+        
+        .btn-doom {
+            background-color: var(--color-doom, #2B2B2B);
+            color: var(--color-doom-foreground, #ffffff);
+        }
+        
+        .btn-doom:hover {
+            background-color: var(--color-doom-hover, #1a1a1a);
+        }
+        
+        .btn-critical {
+            background-color: var(--color-critical, #E62E5C);
+            color: var(--color-critical-foreground, #ffffff);
+        }
+        
+        .btn-critical:hover {
+            background-color: var(--color-critical-hover, #d11a47);
+        }
+        
+        .btn-warning {
+            background-color: var(--color-warning, #E6E35C);
+            color: var(--color-warning-foreground, #000000);
+        }
+        
+        .btn-warning:hover {
+            background-color: var(--color-warning-hover, #ddd947);
+        }
+        
+        .btn-success {
+            background-color: var(--color-success, #37B26C);
+            color: var(--color-success-foreground, #ffffff);
+        }
+        
+        .btn-success:hover {
+            background-color: var(--color-success-hover, #2d9157);
+        }
+        
+        .btn-interactive {
+            background-color: var(--color-interactive, #0984E3);
+            color: var(--color-interactive-foreground, #ffffff);
+        }
+        
+        .btn-interactive:hover {
+            background-color: var(--color-interactive-hover, #0770c4);
+        }
+        
+        .btn-white {
+            background-color: var(--color-white, #FFFFFF);
+            color: var(--color-white-foreground, #000000);
+            border: 1px solid var(--color-border-default, #e4e4e7);
+        }
+        
+        /* Opacity variants demo */
+        .opacity-demo {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        
+        .opacity-sample {
+            width: 2rem;
+            height: 2rem;
+            border-radius: var(--border-radius-sm, 0.125rem);
+        }
+        
+        /* Typography demo */
+        .text-demo {
+            margin: 1rem 0;
+        }
+        
+        .text-xs { font-size: var(--font-size-xs, 0.75rem); }
+        .text-sm { font-size: var(--font-size-sm, 0.875rem); }
+        .text-base { font-size: var(--font-size-base, 1rem); }
+        .text-lg { font-size: var(--font-size-lg, 1.125rem); }
+        .text-xl { font-size: var(--font-size-xl, 1.25rem); }
+        .text-2xl { font-size: var(--font-size-2xl, 1.5rem); }
+        .text-3xl { font-size: var(--font-size-3xl, 1.875rem); }
+        
+        .font-light { font-weight: var(--font-weight-light, 300); }
+        .font-normal { font-weight: var(--font-weight-normal, 400); }
+        .font-medium { font-weight: var(--font-weight-medium, 500); }
+        .font-semibold { font-weight: var(--font-weight-semibold, 600); }
+        .font-bold { font-weight: var(--font-weight-bold, 700); }
+        
+        /* Dark mode styles */
+        :root.dark,
+        [data-mode="dark"] {
+            --color-background: #09090b;
+            --color-foreground: #fafafa;
+        }
+        
+        /* Fallback styles */
+        .fallback-text-primary { color: var(--color-text-primary, #09090b); }
+        .fallback-text-secondary { color: var(--color-text-secondary, #71717a); }
+        .fallback-text-tertiary { color: var(--color-text-tertiary, #a1a1aa); }
     </style>
 </head>
-<body class="bg-neutral-50">
-    <div class="container mx-auto px-4 py-8">
-        <!-- Header -->
-        <header class="text-center mb-12">
-            <div class="mb-4">
-                <span class="working-indicator"></span>
-                <span class="success font-semibold">WORKING!</span>
-            </div>
-            <h1 class="text-6xl font-bold text-primary-600 mb-4">🎨 Design System</h1>
-            <p class="text-xl text-neutral-700 max-w-3xl mx-auto">
-                A comprehensive CSS utility framework with <strong>1,500+ utility classes</strong> compiled successfully! 
-                Your enterprise-grade design system is ready for production.
+<body>
+    <div class="theme-controls">
+        <h3 style="margin: 0 0 1rem 0;" class="fallback-text-primary">Theme Controls</h3>
+        <button class="btn btn-primary" onclick="toggleMode()">
+            Toggle Dark/Light
+        </button>
+        <div style="margin-top: 0.5rem; font-size: 0.875rem;" class="fallback-text-secondary">
+            Current mode: <span id="current-mode">light</span>
+        </div>
+    </div>
+
+    <div class="demo-container">
+        <header style="text-align: center; margin-bottom: 3rem;">
+            <h1 class="text-3xl font-bold fallback-text-primary" style="margin-bottom: 1rem;">
+                Intelligent Theming System
+            </h1>
+            <p class="text-lg fallback-text-secondary">
+                Semantic colors with automatic contrast calculation and dark/light mode support
             </p>
-            <div class="mt-6">
-                <span class="bg-success-100 text-success-800 px-3 py-1 rounded-full text-sm font-medium">
-                    ✅ CSS Compiled: 549KB of utilities
-                </span>
-                <span class="bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm font-medium ml-2">
-                    ✅ TypeScript: Working
-                </span>
-            </div>
         </header>
 
-        <!-- Spacing Demo -->
+        <!-- Semantic Colors Demo -->
         <section class="demo-section">
-            <h2 class="demo-title">✅ Spacing Utilities Working</h2>
+            <h2 class="text-2xl font-semibold fallback-text-primary" style="margin-bottom: 1rem;">
+                Semantic Colors with Intelligent Contrast
+            </h2>
+            <p class="fallback-text-secondary" style="margin-bottom: 1rem;">
+                Each color automatically calculates the optimal text color for maximum readability.
+                Notice how yellow buttons use black text while dark colors use white text.
+            </p>
+            
             <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Margins</h3>
-                    <div class="bg-primary-100 p-2">
-                        <div class="bg-primary-500 text-white p-2 m-4 rounded">
-                            <code>m-4</code> - 1rem margin
-                        </div>
-                    </div>
+                <div class="color-demo" style="background-color: var(--color-primary, #6C5CE7); color: var(--color-primary-foreground, #ffffff);">
+                    Primary
+                    <div style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.5rem;">#6C5CE7</div>
                 </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Padding</h3>
-                    <div class="bg-success-100 rounded">
-                        <div class="bg-success-500 text-white p-6 rounded">
-                            <code>p-6</code> - 1.5rem padding
-                        </div>
-                    </div>
+                <div class="color-demo" style="background-color: var(--color-doom, #2B2B2B); color: var(--color-doom-foreground, #ffffff);">
+                    Doom
+                    <div style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.5rem;">#2B2B2B</div>
                 </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Space Between</h3>
-                    <div class="space-y-3">
-                        <div class="bg-warning-500 text-white p-2 rounded">Item 1</div>
-                        <div class="bg-warning-500 text-white p-2 rounded">Item 2</div>
-                        <div class="bg-warning-500 text-white p-2 rounded">Item 3</div>
-                    </div>
-                    <small><code>space-y-3</code></small>
+                <div class="color-demo" style="background-color: var(--color-white, #FFFFFF); color: var(--color-white-foreground, #000000); border: 1px solid var(--color-border-default, #e4e4e7);">
+                    White
+                    <div style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.5rem;">#FFFFFF</div>
+                </div>
+                <div class="color-demo" style="background-color: var(--color-critical, #E62E5C); color: var(--color-critical-foreground, #ffffff);">
+                    Critical
+                    <div style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.5rem;">#E62E5C</div>
+                </div>
+                <div class="color-demo" style="background-color: var(--color-warning, #E6E35C); color: var(--color-warning-foreground, #000000);">
+                    Warning
+                    <div style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.5rem;">#E6E35C</div>
+                </div>
+                <div class="color-demo" style="background-color: var(--color-success, #37B26C); color: var(--color-success-foreground, #ffffff);">
+                    Success
+                    <div style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.5rem;">#37B26C</div>
+                </div>
+                <div class="color-demo" style="background-color: var(--color-interactive, #0984E3); color: var(--color-interactive-foreground, #ffffff);">
+                    Interactive
+                    <div style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.5rem;">#0984E3</div>
                 </div>
             </div>
         </section>
 
-        <!-- Colors Demo -->
+        <!-- Button Examples -->
         <section class="demo-section">
-            <h2 class="demo-title">✅ Color System Working</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Primary Colors</h3>
-                    <div class="flex space-x-2">
-                        <div class="bg-primary-100 w-8 h-8 rounded"></div>
-                        <div class="bg-primary-300 w-8 h-8 rounded"></div>
-                        <div class="bg-primary-500 w-8 h-8 rounded"></div>
-                        <div class="bg-primary-700 w-8 h-8 rounded"></div>
-                        <div class="bg-primary-900 w-8 h-8 rounded"></div>
-                    </div>
-                    <small>Primary color scale</small>
+            <h2 class="text-2xl font-semibold fallback-text-primary" style="margin-bottom: 1rem;">
+                Interactive Button Examples
+            </h2>
+            <p class="fallback-text-secondary" style="margin-bottom: 1rem;">
+                Buttons with automatic hover states and intelligent text contrast.
+            </p>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                <button class="btn btn-primary">Primary Action</button>
+                <button class="btn btn-doom">Doom Action</button>
+                <button class="btn btn-white">White Action</button>
+                <button class="btn btn-critical">Critical Action</button>
+                <button class="btn btn-warning">Warning Action</button>
+                <button class="btn btn-success">Success Action</button>
+                <button class="btn btn-interactive">Interactive Action</button>
+            </div>
+        </section>
+
+        <!-- Color Opacity Variants -->
+        <section class="demo-section">
+            <h2 class="text-2xl font-semibold fallback-text-primary" style="margin-bottom: 1rem;">
+                Color Opacity Variants
+            </h2>
+            <p class="fallback-text-secondary" style="margin-bottom: 1rem;">
+                Each semantic color comes with predefined opacity variants for subtle backgrounds and overlays.
+            </p>
+            
+            <div>
+                <h3 class="fallback-text-primary" style="margin: 1rem 0 0.5rem 0;">Primary Color Variants</h3>
+                <div class="opacity-demo">
+                    <div class="opacity-sample" style="background-color: var(--color-primary-10, rgba(108, 92, 231, 0.1));"></div>
+                    <div class="opacity-sample" style="background-color: var(--color-primary-20, rgba(108, 92, 231, 0.2));"></div>
+                    <div class="opacity-sample" style="background-color: var(--color-primary-30, rgba(108, 92, 231, 0.3));"></div>
+                    <div class="opacity-sample" style="background-color: var(--color-primary-50, rgba(108, 92, 231, 0.5));"></div>
+                    <div class="opacity-sample" style="background-color: var(--color-primary-70, rgba(108, 92, 231, 0.7));"></div>
+                    <div class="opacity-sample" style="background-color: var(--color-primary, #6C5CE7);"></div>
+                    <span class="fallback-text-secondary" style="font-size: 0.875rem;">10% → 20% → 30% → 50% → 70% → 100%</span>
                 </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Status Colors</h3>
-                    <div class="space-y-2">
-                        <div class="bg-success-500 text-white px-3 py-1 rounded text-sm">Success</div>
-                        <div class="bg-warning-500 text-white px-3 py-1 rounded text-sm">Warning</div>
-                        <div class="bg-error-500 text-white px-3 py-1 rounded text-sm">Error</div>
-                        <div class="bg-info-500 text-white px-3 py-1 rounded text-sm">Info</div>
-                    </div>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Text Colors</h3>
-                    <div class="space-y-1">
-                        <p class="text-neutral-900">Dark text</p>
-                        <p class="text-neutral-600">Medium text</p>
-                        <p class="text-neutral-400">Light text</p>
-                        <p class="text-primary-600">Primary text</p>
-                    </div>
+                
+                <h3 class="fallback-text-primary" style="margin: 1rem 0 0.5rem 0;">Warning Color Variants</h3>
+                <div class="opacity-demo">
+                    <div class="opacity-sample" style="background-color: var(--color-warning-10, rgba(230, 227, 92, 0.1));"></div>
+                    <div class="opacity-sample" style="background-color: var(--color-warning-20, rgba(230, 227, 92, 0.2));"></div>
+                    <div class="opacity-sample" style="background-color: var(--color-warning-30, rgba(230, 227, 92, 0.3));"></div>
+                    <div class="opacity-sample" style="background-color: var(--color-warning-50, rgba(230, 227, 92, 0.5));"></div>
+                    <div class="opacity-sample" style="background-color: var(--color-warning-70, rgba(230, 227, 92, 0.7));"></div>
+                    <div class="opacity-sample" style="background-color: var(--color-warning, #E6E35C);"></div>
+                    <span class="fallback-text-secondary" style="font-size: 0.875rem;">10% → 20% → 30% → 50% → 70% → 100%</span>
                 </div>
             </div>
         </section>
 
-        <!-- Typography Demo -->
+        <!-- Typography System -->
         <section class="demo-section">
-            <h2 class="demo-title">✅ Typography System Working</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Font Sizes</h3>
-                    <div class="space-y-2">
-                        <p class="text-xs">Extra small text</p>
-                        <p class="text-sm">Small text</p>
-                        <p class="text-base">Base text</p>
-                        <p class="text-lg">Large text</p>
-                        <p class="text-xl">Extra large text</p>
-                    </div>
+            <h2 class="text-2xl font-semibold fallback-text-primary" style="margin-bottom: 1rem;">
+                Typography System
+            </h2>
+            <p class="fallback-text-secondary" style="margin-bottom: 1rem;">
+                Consistent typography scales with proper contrast in both light and dark modes.
+            </p>
+            
+            <div class="text-demo text-3xl font-bold fallback-text-primary">Heading 1 - Bold</div>
+            <div class="text-demo text-2xl font-semibold fallback-text-primary">Heading 2 - Semibold</div>
+            <div class="text-demo text-xl font-medium fallback-text-primary">Heading 3 - Medium</div>
+            <div class="text-demo text-lg font-normal fallback-text-primary">Large Text - Normal</div>
+            <div class="text-demo text-base font-normal fallback-text-primary">Body Text - Normal</div>
+            <div class="text-demo text-sm font-normal fallback-text-secondary">Small Text - Secondary</div>
+            <div class="text-demo text-xs font-light fallback-text-tertiary">Extra Small - Light</div>
+        </section>
+
+        <!-- Dark Mode Features -->
+        <section class="demo-section">
+            <h2 class="text-2xl font-semibold fallback-text-primary" style="margin-bottom: 1rem;">
+                Dark Mode Features
+            </h2>
+            <p class="fallback-text-secondary" style="margin-bottom: 1rem;">
+                Switch between light and dark modes using the toggle in the top-right corner. 
+                All colors automatically adjust for optimal contrast and readability.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                <div style="padding: 1rem; background: var(--color-surface-secondary, #f8fafc); border-radius: var(--border-radius-md, 0.375rem);">
+                    <h4 class="fallback-text-primary" style="margin: 0 0 0.5rem 0;">Surface Colors</h4>
+                    <p class="fallback-text-secondary" style="font-size: 0.875rem; margin: 0;">
+                        Background surfaces adapt automatically
+                    </p>
                 </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Font Weights</h3>
-                    <div class="space-y-1">
-                        <p class="font-light">Light weight</p>
-                        <p class="font-normal">Normal weight</p>
-                        <p class="font-medium">Medium weight</p>
-                        <p class="font-semibold">Semibold weight</p>
-                        <p class="font-bold">Bold weight</p>
-                    </div>
+                <div style="padding: 1rem; background: var(--color-surface-tertiary, #f1f5f9); border-radius: var(--border-radius-md, 0.375rem);">
+                    <h4 class="fallback-text-primary" style="margin: 0 0 0.5rem 0;">Text Contrast</h4>
+                    <p class="fallback-text-secondary" style="font-size: 0.875rem; margin: 0;">
+                        Text maintains proper contrast ratios
+                    </p>
                 </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Text Alignment</h3>
-                    <div class="space-y-1">
-                        <p class="text-left">Left aligned</p>
-                        <p class="text-center">Center aligned</p>
-                        <p class="text-right">Right aligned</p>
-                    </div>
+                <div style="padding: 1rem; background: var(--color-surface-elevated, #ffffff); border-radius: var(--border-radius-md, 0.375rem); box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));">
+                    <h4 class="fallback-text-primary" style="margin: 0 0 0.5rem 0;">Elevated Elements</h4>
+                    <p class="fallback-text-secondary" style="font-size: 0.875rem; margin: 0;">
+                        Shadows and elevation work in both modes
+                    </p>
                 </div>
             </div>
         </section>
-
-        <!-- Layout Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">✅ Layout & Flexbox Working</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Flexbox</h3>
-                    <div class="flex justify-between items-center p-3 bg-neutral-100 rounded">
-                        <div class="bg-primary-500 text-white px-2 py-1 rounded text-sm">Start</div>
-                        <div class="bg-primary-500 text-white px-2 py-1 rounded text-sm">Center</div>
-                        <div class="bg-primary-500 text-white px-2 py-1 rounded text-sm">End</div>
-                    </div>
-                    <small><code>flex justify-between items-center</code></small>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Grid</h3>
-                    <div class="grid grid-cols-3 gap-2">
-                        <div class="bg-success-400 h-8 rounded"></div>
-                        <div class="bg-success-400 h-8 rounded"></div>
-                        <div class="bg-success-400 h-8 rounded"></div>
-                    </div>
-                    <small><code>grid grid-cols-3 gap-2</code></small>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Responsive</h3>
-                    <div class="w-full h-16 bg-gradient-to-r from-primary-400 to-secondary-400 rounded flex items-center justify-center text-white font-semibold">
-                        Responsive Container
-                    </div>
-                    <small>Responsive utilities working</small>
-                </div>
-            </div>
-        </section>
-
-        <!-- Effects Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">✅ Effects & Borders Working</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Shadows</h3>
-                    <div class="space-y-3">
-                        <div class="shadow-sm bg-white p-3 rounded">Small shadow</div>
-                        <div class="shadow-md bg-white p-3 rounded">Medium shadow</div>
-                        <div class="shadow-lg bg-white p-3 rounded">Large shadow</div>
-                    </div>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Border Radius</h3>
-                    <div class="flex space-x-3">
-                        <div class="w-12 h-12 bg-primary-400 rounded-none"></div>
-                        <div class="w-12 h-12 bg-primary-400 rounded"></div>
-                        <div class="w-12 h-12 bg-primary-400 rounded-lg"></div>
-                        <div class="w-12 h-12 bg-primary-400 rounded-full"></div>
-                    </div>
-                    <small>None, default, large, full</small>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Opacity</h3>
-                    <div class="space-y-2">
-                        <div class="bg-primary-500 text-white p-2 rounded opacity-100">100%</div>
-                        <div class="bg-primary-500 text-white p-2 rounded opacity-75">75%</div>
-                        <div class="bg-primary-500 text-white p-2 rounded opacity-50">50%</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Success Footer -->
-        <footer class="text-center py-8 border-t">
-            <div class="max-w-2xl mx-auto">
-                <h3 class="text-2xl font-bold text-success-600 mb-4">
-                    🎉 Congratulations! Your Design System is Working
-                </h3>
-                <p class="text-neutral-600">
-                    You now have a complete, production-ready CSS utility framework with over 1,500 utility classes, 
-                    TypeScript integration, and enterprise-grade build system.
-                </p>
-                <div class="mt-6 space-x-4">
-                    <span class="bg-success-100 text-success-800 px-4 py-2 rounded-lg font-medium">
-                        ✅ All Systems Operational
-                    </span>
-                </div>
-            </div>
-        </footer>
     </div>
 
     <script>
-        // Initialize the design system
-        console.log('🎨 Design System initialized successfully!');
-        console.log('📦 Version: 1.0.0');
-        console.log('✅ CSS utilities loaded and working');
-        
-        // Add some interactivity to show it's working
-        document.addEventListener('DOMContentLoaded', function() {
-            const indicator = document.querySelector('.working-indicator');
-            if (indicator) {
-                setInterval(() => {
-                    indicator.style.background = indicator.style.background === 'rgb(239, 68, 68)' ? '#10b981' : '#ef4444';
-                }, 2000);
+        // Theme toggle functionality
+        function toggleMode() {
+            if (window.themeManager) {
+                window.themeManager.toggleMode();
+                updateModeDisplay();
+            } else {
+                // Fallback toggle
+                const root = document.documentElement;
+                const currentMode = root.classList.contains('dark') ? 'light' : 'dark';
+                root.classList.toggle('dark');
+                root.setAttribute('data-mode', currentMode);
+                updateModeDisplay(currentMode);
             }
+        }
+        
+        function updateModeDisplay(mode) {
+            const currentModeElement = document.getElementById('current-mode');
+            if (currentModeElement) {
+                if (window.themeManager) {
+                    currentModeElement.textContent = window.themeManager.getCurrentMode();
+                } else {
+                    currentModeElement.textContent = mode || (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                }
+            }
+        }
+        
+        // Initialize theme display
+        document.addEventListener('DOMContentLoaded', function() {
+            updateModeDisplay();
+            
+            // Listen for theme changes if themeManager is available
+            if (window.themeManager) {
+                window.themeManager.subscribe(() => {
+                    updateModeDisplay();
+                });
+            }
+            
+            // Add click handlers to color demos for interaction
+            const colorDemos = document.querySelectorAll('.color-demo');
+            colorDemos.forEach(demo => {
+                demo.addEventListener('click', function() {
+                    // Simple animation on click
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
         });
     </script>
-</body>
-</html>
-        <header class="text-center mb-12">
-            <h1 class="text-6xl font-bold text-primary mb-4">Configurable Design System</h1>
-            <p class="text-xl text-secondary max-w-3xl mx-auto">
-                A comprehensive CSS utility framework inspired by Tailwind CSS, built with SCSS and TypeScript for enterprise organizations.
-            </p>
-        </header>
-
-        <!-- Spacing Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">Spacing Utilities</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Margin</h3>
-                    <div class="bg-blue-100 p-2">
-                        <div class="bg-blue-500 text-white p-2 m-4">
-                            <code>m-4</code> (1rem margin)
-                        </div>
-                    </div>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Padding</h3>
-                    <div class="bg-green-100">
-                        <div class="bg-green-500 text-white p-6">
-                            <code>p-6</code> (1.5rem padding)
-                        </div>
-                    </div>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Space Between</h3>
-                    <div class="space-y-3">
-                        <div class="bg-purple-500 text-white p-2">Item 1</div>
-                        <div class="bg-purple-500 text-white p-2">Item 2</div>
-                        <div class="bg-purple-500 text-white p-2">Item 3</div>
-                    </div>
-                    <code>space-y-3</code>
-                </div>
-            </div>
-        </section>
-
-        <!-- Colors Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">Color Utilities</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Background Colors</h3>
-                    <div class="grid grid-cols-5 gap-2">
-                        <div class="bg-primary-500 h-8 rounded"></div>
-                        <div class="bg-secondary-500 h-8 rounded"></div>
-                        <div class="bg-success-500 h-8 rounded"></div>
-                        <div class="bg-warning-500 h-8 rounded"></div>
-                        <div class="bg-error-500 h-8 rounded"></div>
-                    </div>
-                    <p class="text-sm mt-2">Primary, Secondary, Success, Warning, Error</p>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Text Colors</h3>
-                    <div class="space-y-1">
-                        <p class="text-primary">Primary text</p>
-                        <p class="text-secondary">Secondary text</p>
-                        <p class="text-tertiary">Tertiary text</p>
-                        <p class="text-link">Link text</p>
-                    </div>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Gradients</h3>
-                    <div class="bg-gradient-to-r from-primary-500 to-secondary-500 h-16 rounded text-white flex items-center justify-center">
-                        <code>bg-gradient-to-r from-primary-500 to-secondary-500</code>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Typography Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">Typography Utilities</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Font Sizes</h3>
-                    <div class="space-y-2">
-                        <div class="text-xs">Extra Small Text (xs)</div>
-                        <div class="text-sm">Small Text (sm)</div>
-                        <div class="text-base">Base Text (base)</div>
-                        <div class="text-lg">Large Text (lg)</div>
-                        <div class="text-xl">Extra Large Text (xl)</div>
-                        <div class="text-2xl">2XL Text (2xl)</div>
-                    </div>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Font Weights</h3>
-                    <div class="space-y-1">
-                        <div class="font-light">Light Weight</div>
-                        <div class="font-normal">Normal Weight</div>
-                        <div class="font-medium">Medium Weight</div>
-                        <div class="font-semibold">Semibold Weight</div>
-                        <div class="font-bold">Bold Weight</div>
-                    </div>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Text Decoration</h3>
-                    <div class="space-y-1">
-                        <div class="underline">Underlined text</div>
-                        <div class="line-through">Strike-through text</div>
-                        <div class="no-underline">No decoration</div>
-                        <div class="uppercase">Uppercase text</div>
-                        <div class="capitalize">Capitalized text</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Layout Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">Layout Utilities</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Display</h3>
-                    <div class="space-y-2">
-                        <div class="block bg-blue-100 p-2">Block element</div>
-                        <div class="inline-block bg-green-100 p-2">Inline-block</div>
-                        <div class="flex bg-purple-100 p-2">
-                            <div class="flex-1">Flex container</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Position</h3>
-                    <div class="relative bg-gray-100 h-20">
-                        <div class="absolute top-2 left-2 bg-red-500 text-white p-1 text-xs">
-                            absolute top-2 left-2
-                        </div>
-                        <div class="absolute bottom-2 right-2 bg-blue-500 text-white p-1 text-xs">
-                            absolute bottom-2 right-2
-                        </div>
-                    </div>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Overflow</h3>
-                    <div class="overflow-hidden bg-gray-100 h-16 p-2">
-                        <div class="whitespace-nowrap">
-                            This is a very long text that will be hidden due to overflow-hidden class being applied to the parent container.
-                        </div>
-                    </div>
-                    <code>overflow-hidden</code>
-                </div>
-            </div>
-        </section>
-
-        <!-- Flexbox Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">Flexbox Utilities</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Flex Direction</h3>
-                    <div class="flex flex-col space-y-2 bg-gray-100 p-2">
-                        <div class="bg-blue-500 text-white p-2 text-center">Item 1</div>
-                        <div class="bg-blue-500 text-white p-2 text-center">Item 2</div>
-                        <div class="bg-blue-500 text-white p-2 text-center">Item 3</div>
-                    </div>
-                    <code>flex flex-col</code>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Justify Content</h3>
-                    <div class="flex justify-between bg-gray-100 p-2">
-                        <div class="bg-green-500 text-white p-2">A</div>
-                        <div class="bg-green-500 text-white p-2">B</div>
-                        <div class="bg-green-500 text-white p-2">C</div>
-                    </div>
-                    <code>flex justify-between</code>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Align Items</h3>
-                    <div class="flex items-center bg-gray-100 p-2 h-20">
-                        <div class="bg-purple-500 text-white p-2">Centered</div>
-                        <div class="bg-purple-500 text-white p-3 ml-2">Items</div>
-                    </div>
-                    <code>flex items-center</code>
-                </div>
-            </div>
-        </section>
-
-        <!-- Grid Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">Grid Utilities</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Grid Columns</h3>
-                    <div class="grid grid-cols-3 gap-2 bg-gray-100 p-2">
-                        <div class="bg-indigo-500 text-white p-2 text-center">1</div>
-                        <div class="bg-indigo-500 text-white p-2 text-center">2</div>
-                        <div class="bg-indigo-500 text-white p-2 text-center">3</div>
-                    </div>
-                    <code>grid grid-cols-3 gap-2</code>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Column Span</h3>
-                    <div class="grid grid-cols-4 gap-2 bg-gray-100 p-2">
-                        <div class="bg-pink-500 text-white p-2 text-center col-span-2">Span 2</div>
-                        <div class="bg-pink-500 text-white p-2 text-center">1</div>
-                        <div class="bg-pink-500 text-white p-2 text-center">1</div>
-                    </div>
-                    <code>col-span-2</code>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sizing Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">Sizing Utilities</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Width</h3>
-                    <div class="space-y-2">
-                        <div class="w-1/4 bg-yellow-500 text-white p-2">w-1/4</div>
-                        <div class="w-1/2 bg-yellow-500 text-white p-2">w-1/2</div>
-                        <div class="w-3/4 bg-yellow-500 text-white p-2">w-3/4</div>
-                        <div class="w-full bg-yellow-500 text-white p-2">w-full</div>
-                    </div>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Height</h3>
-                    <div class="flex space-x-2">
-                        <div class="w-8 h-8 bg-red-500"></div>
-                        <div class="w-8 h-12 bg-red-500"></div>
-                        <div class="w-8 h-16 bg-red-500"></div>
-                        <div class="w-8 h-20 bg-red-500"></div>
-                    </div>
-                    <p class="text-sm mt-2">h-8, h-12, h-16, h-20</p>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Max Width</h3>
-                    <div class="max-w-xs bg-teal-500 text-white p-2">
-                        This text is constrained by max-w-xs and will wrap when it exceeds the maximum width.
-                    </div>
-                    <code>max-w-xs</code>
-                </div>
-            </div>
-        </section>
-
-        <!-- Borders & Effects Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">Borders & Effects</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Border Radius</h3>
-                    <div class="grid grid-cols-4 gap-2">
-                        <div class="bg-gray-500 h-12 rounded-none"></div>
-                        <div class="bg-gray-500 h-12 rounded"></div>
-                        <div class="bg-gray-500 h-12 rounded-lg"></div>
-                        <div class="bg-gray-500 h-12 rounded-full"></div>
-                    </div>
-                    <p class="text-xs mt-1">none, base, lg, full</p>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Shadows</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-white p-4 shadow-sm border">shadow-sm</div>
-                        <div class="bg-white p-4 shadow">shadow</div>
-                        <div class="bg-white p-4 shadow-lg">shadow-lg</div>
-                        <div class="bg-white p-4 shadow-xl">shadow-xl</div>
-                    </div>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Opacity</h3>
-                    <div class="space-y-2">
-                        <div class="bg-blue-500 text-white p-2 opacity-100">opacity-100</div>
-                        <div class="bg-blue-500 text-white p-2 opacity-75">opacity-75</div>
-                        <div class="bg-blue-500 text-white p-2 opacity-50">opacity-50</div>
-                        <div class="bg-blue-500 text-white p-2 opacity-25">opacity-25</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Transitions Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">Transitions & Transforms</h2>
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Hover Transitions</h3>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors duration-300">
-                        Hover me!
-                    </button>
-                    <p class="text-sm mt-2"><code>transition-colors duration-300</code></p>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Transform Scale</h3>
-                    <div class="bg-green-500 w-16 h-16 rounded hover:scale-110 transition-transform duration-300 cursor-pointer"></div>
-                    <p class="text-sm mt-2"><code>hover:scale-110 transition-transform</code></p>
-                </div>
-                <div class="demo-item">
-                    <h3 class="font-semibold mb-2">Rotate</h3>
-                    <div class="bg-purple-500 w-16 h-16 rounded hover:rotate-45 transition-transform duration-500 cursor-pointer"></div>
-                    <p class="text-sm mt-2"><code>hover:rotate-45</code></p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Responsive Demo -->
-        <section class="demo-section">
-            <h2 class="demo-title">Responsive Design</h2>
-            <div class="demo-item">
-                <h3 class="font-semibold mb-2">Responsive Grid</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                    <div class="bg-indigo-500 text-white p-4 text-center">1</div>
-                    <div class="bg-indigo-500 text-white p-4 text-center">2</div>
-                    <div class="bg-indigo-500 text-white p-4 text-center">3</div>
-                    <div class="bg-indigo-500 text-white p-4 text-center">4</div>
-                </div>
-                <p class="text-sm mt-2">
-                    <code>grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4</code>
-                </p>
-                <p class="text-xs text-secondary mt-1">
-                    Resize your browser to see the responsive behavior
-                </p>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="text-center mt-16 pt-8 border-t border-divider">
-            <p class="text-secondary">
-                Built with ❤️ using our Configurable Design System
-            </p>
-            <p class="text-sm text-tertiary mt-2">
-                Enterprise-ready • TypeScript • SCSS • Utility-first
-            </p>
-        </footer>
-    </div>
 </body>
 </html>

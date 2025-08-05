@@ -1,21 +1,17 @@
 /**
- * Token Manager - Runtime configuration and theme management
- * Enhanced with multi-theme support and contrast validation
+ * Token Manager - Simplified token access and CSS generation
+ * Works with the new semantic color system
  */
 
-import { DesignTokens, defaultTokens, themes, getThemeTokens } from './design-tokens';
+import { DesignTokens, ThemeMode, getThemeTokens } from './design-tokens';
 import { themeManager } from './theme-manager';
 
 export class TokenManager {
   private tokens: DesignTokens;
-  private customProperties: Map<string, string> = new Map();
   private observers: Set<(tokens: DesignTokens) => void> = new Set();
-  private currentTheme: string = 'ocean';
-  private currentMode: 'light' | 'dark' = 'light';
 
-  constructor(initialTokens: Partial<DesignTokens> = {}) {
-    this.tokens = this.mergeTokens(defaultTokens, initialTokens);
-    this.generateCSSCustomProperties();
+  constructor() {
+    this.tokens = getThemeTokens('default', 'light');
     this.setupThemeListener();
   }
 
@@ -23,12 +19,8 @@ export class TokenManager {
    * Setup theme change listener
    */
   private setupThemeListener(): void {
-    window.addEventListener('themechange', (event: any) => {
-      this.currentTheme = event.detail.theme;
-      this.currentMode = event.detail.mode;
-      this.tokens = event.detail.tokens;
-      this.generateCSSCustomProperties();
-      this.applyCSSCustomProperties();
+    themeManager.subscribe((theme: string, mode: ThemeMode, tokens: DesignTokens) => {
+      this.tokens = tokens;
       this.notifyObservers();
     });
   }
@@ -41,340 +33,354 @@ export class TokenManager {
   }
 
   /**
-   * Update tokens partially or completely
+   * Get a specific color token with dot notation
+   * Example: getColor('primary.DEFAULT') or getColor('primary.foreground')
    */
-  updateTokens(newTokens: Partial<DesignTokens>): void {
-    this.tokens = this.mergeTokens(this.tokens, newTokens);
-    this.generateCSSCustomProperties();
-    this.applyCSSCustomProperties();
-    this.notifyObservers();
-  }
-
-  /**
-   * Switch to a specific theme
-   */
-  setTheme(themeId: string, mode?: 'light' | 'dark'): void {
-    if (mode) {
-      themeManager.setMode(mode);
-    }
-    themeManager.setTheme(themeId);
-  }
-
-  /**
-   * Get current theme information
-   */
-  getCurrentTheme(): { id: string; mode: 'light' | 'dark'; name: string } {
-    const theme = themes[this.currentTheme];
-    return {
-      id: this.currentTheme,
-      mode: this.currentMode,
-      name: theme?.name || 'Unknown'
-    };
-  }
-
-  /**
-   * Get all available themes
-   */
-  getAvailableThemes() {
-    return Object.values(themes);
-  }
-
-  /**
-   * Set a specific token value
-   */
-  setToken(path: string, value: any): void {
-    this.setNestedProperty(this.tokens, path, value);
-    this.generateCSSCustomProperties();
-    this.applyCSSCustomProperties();
-    this.notifyObservers();
-  }
-
-  /**
-   * Get a specific token value
-   */
-  getToken(path: string): any {
-    return this.getNestedProperty(this.tokens, path);
-  }
-
-  /**
-   * Validate color contrast ratio
-   */
-  validateContrast(foreground: string, background: string): { ratio: number; isAccessible: boolean; level: string } {
-    const ratio = this.calculateContrastRatio(foreground, background);
-    const isAALevel = ratio >= 4.5;
-    const isAAALevel = ratio >= 7.0;
-    const isLargeTextAA = ratio >= 3.0;
+  getColor(path: string): string | undefined {
+    const keys = path.split('.');
+    let current: any = this.tokens.colors;
     
-    let level = 'Fail';
-    if (isAAALevel) level = 'AAA';
-    else if (isAALevel) level = 'AA';
-    else if (isLargeTextAA) level = 'AA Large';
-    
-    return {
-      ratio: Math.round(ratio * 100) / 100,
-      isAccessible: isAALevel,
-      level
-    };
-  }
-
-  /**
-   * Calculate contrast ratio between two colors
-   */
-  private calculateContrastRatio(color1: string, color2: string): number {
-    const l1 = this.getLuminance(color1);
-    const l2 = this.getLuminance(color2);
-    const brightest = Math.max(l1, l2);
-    const darkest = Math.min(l1, l2);
-    return (brightest + 0.05) / (darkest + 0.05);
-  }
-
-  /**
-   * Get relative luminance of a color
-   */
-  private getLuminance(color: string): number {
-    const rgb = this.hexToRgb(color);
-    if (!rgb) return 0;
-    
-    const [r, g, b] = [rgb.r, rgb.g, rgb.b].map(c => {
-      c = c / 255;
-      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-    });
-    
-    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  }
-
-  /**
-   * Convert hex color to RGB
-   */
-  private hexToRgb(hex: string): { r: number; g: number; b: number } | null {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    } : null;
-  }
-
-  /**
-   * Get high contrast color combinations
-   */
-  getHighContrastPairs(): Array<{ foreground: string; background: string; ratio: number }> {
-    const colors = this.tokens.colors;
-    const pairs: Array<{ foreground: string; background: string; ratio: number }> = [];
-    
-    // Test primary combinations
-    const primaryBg = colors.primary[500];
-    const textColors = [colors.text.primary, colors.text.inverse, colors.surface.background, colors.surface.foreground];
-    
-    textColors.forEach(textColor => {
-      const contrast = this.validateContrast(textColor, primaryBg);
-      if (contrast.isAccessible) {
-        pairs.push({
-          foreground: textColor,
-          background: primaryBg,
-          ratio: contrast.ratio
-        });
+    for (const key of keys) {
+      if (current && typeof current === 'object' && key in current) {
+        current = current[key];
+      } else {
+        return undefined;
       }
+    }
+    
+    return typeof current === 'string' ? current : undefined;
+  }
+
+  /**
+   * Get semantic colors with intelligent contrast
+   */
+  getSemanticColor(
+    colorName: 'primary' | 'doom' | 'white' | 'critical' | 'warning' | 'success' | 'interactive',
+    variant: 'DEFAULT' | 'foreground' | 'hover' | 'pressed' | 'focus' | 'subtle' | 'muted' | 'emphasis' | '10' | '20' | '30' | '50' | '70' = 'DEFAULT'
+  ): string {
+    return this.tokens.colors[colorName][variant];
+  }
+
+  /**
+   * Get spacing value
+   */
+  getSpacing(key: keyof typeof this.tokens.spacing): string {
+    return this.tokens.spacing[key];
+  }
+
+  /**
+   * Get typography value
+   */
+  getTypography(category: 'fontFamily' | 'fontSize' | 'fontWeight' | 'lineHeight' | 'letterSpacing', key: string): any {
+    const categoryObj = this.tokens.typography[category];
+    if (categoryObj && typeof categoryObj === 'object') {
+      return (categoryObj as any)[key];
+    }
+    return undefined;
+  }
+
+  /**
+   * Get shadow value
+   */
+  getShadow(key: keyof typeof this.tokens.shadows): string {
+    return this.tokens.shadows[key];
+  }
+
+  /**
+   * Get border radius value
+   */
+  getBorderRadius(key: keyof typeof this.tokens.borders.radius): string {
+    return this.tokens.borders.radius[key];
+  }
+
+  /**
+   * Get border width value
+   */
+  getBorderWidth(key: keyof typeof this.tokens.borders.width): string {
+    return this.tokens.borders.width[key];
+  }
+
+  /**
+   * Get transition duration
+   */
+  getTransitionDuration(key: keyof typeof this.tokens.transitions.duration): string {
+    return this.tokens.transitions.duration[key];
+  }
+
+  /**
+   * Get transition timing function
+   */
+  getTransitionTiming(key: keyof typeof this.tokens.transitions.timing): string {
+    return this.tokens.transitions.timing[key];
+  }
+
+  /**
+   * Get breakpoint value
+   */
+  getBreakpoint(key: keyof typeof this.tokens.breakpoints): string {
+    return this.tokens.breakpoints[key];
+  }
+
+  /**
+   * Get z-index value
+   */
+  getZIndex(key: keyof typeof this.tokens.zIndex): string | number {
+    return this.tokens.zIndex[key];
+  }
+
+  /**
+   * Generate CSS custom properties for all tokens
+   */
+  generateCSSCustomProperties(): Map<string, string> {
+    const cssVars = new Map<string, string>();
+    
+    // Semantic colors with automatic contrast
+    const semanticColors = ['primary', 'doom', 'white', 'critical', 'warning', 'success', 'interactive'] as const;
+    const colorVariants = ['DEFAULT', 'foreground', 'hover', 'pressed', 'focus', 'subtle', 'muted', 'emphasis', '10', '20', '30', '50', '70'] as const;
+    
+    semanticColors.forEach(colorName => {
+      colorVariants.forEach(variant => {
+        const value = this.tokens.colors[colorName][variant];
+        if (value) {
+          const varName = variant === 'DEFAULT' 
+            ? `--color-${colorName}` 
+            : `--color-${colorName}-${variant}`;
+          cssVars.set(varName, value);
+        }
+      });
+    });
+
+    // Mode-specific colors
+    const currentMode = themeManager.getCurrentMode();
+    const modeColors = currentMode === 'dark' ? this.tokens.colors.dark : this.tokens.colors.light;
+    
+    cssVars.set('--color-background', modeColors.background);
+    cssVars.set('--color-foreground', modeColors.foreground);
+    
+    // Surface colors
+    Object.entries(modeColors.surface).forEach(([key, value]) => {
+      cssVars.set(`--color-surface-${key}`, value);
     });
     
-    return pairs.sort((a, b) => b.ratio - a.ratio);
+    // Text colors
+    Object.entries(modeColors.text).forEach(([key, value]) => {
+      cssVars.set(`--color-text-${key}`, value);
+    });
+    
+    // Border colors
+    Object.entries(modeColors.border).forEach(([key, value]) => {
+      cssVars.set(`--color-border-${key}`, value);
+    });
+
+    // Typography
+    cssVars.set('--font-family-sans', this.tokens.typography.fontFamily.sans.join(', '));
+    cssVars.set('--font-family-serif', this.tokens.typography.fontFamily.serif.join(', '));
+    cssVars.set('--font-family-mono', this.tokens.typography.fontFamily.mono.join(', '));
+    
+    Object.entries(this.tokens.typography.fontSize).forEach(([key, value]) => {
+      cssVars.set(`--font-size-${key}`, value);
+    });
+    
+    Object.entries(this.tokens.typography.fontWeight).forEach(([key, value]) => {
+      cssVars.set(`--font-weight-${key}`, value.toString());
+    });
+    
+    Object.entries(this.tokens.typography.lineHeight).forEach(([key, value]) => {
+      cssVars.set(`--line-height-${key}`, value.toString());
+    });
+
+    // Spacing
+    Object.entries(this.tokens.spacing).forEach(([key, value]) => {
+      cssVars.set(`--spacing-${key.replace('.', '-')}`, value);
+    });
+
+    // Borders
+    Object.entries(this.tokens.borders.radius).forEach(([key, value]) => {
+      cssVars.set(`--border-radius-${key}`, value);
+    });
+    
+    Object.entries(this.tokens.borders.width).forEach(([key, value]) => {
+      cssVars.set(`--border-width-${key}`, value);
+    });
+
+    // Shadows
+    Object.entries(this.tokens.shadows).forEach(([key, value]) => {
+      cssVars.set(`--shadow-${key}`, value);
+    });
+
+    // Transitions
+    Object.entries(this.tokens.transitions.duration).forEach(([key, value]) => {
+      cssVars.set(`--transition-duration-${key}`, value);
+    });
+    
+    Object.entries(this.tokens.transitions.timing).forEach(([key, value]) => {
+      cssVars.set(`--transition-timing-${key}`, value);
+    });
+
+    // Breakpoints
+    Object.entries(this.tokens.breakpoints).forEach(([key, value]) => {
+      cssVars.set(`--breakpoint-${key}`, value);
+    });
+
+    return cssVars;
   }
 
   /**
-   * Get CSS custom property name for a token path
+   * Generate CSS string from custom properties
    */
-  getCSSCustomProperty(path: string): string {
-    const cssVarName = `--cds-${path.replace(/\./g, '-')}`;
-    return this.customProperties.get(cssVarName) || '';
+  generateCSSString(): string {
+    const cssVars = this.generateCSSCustomProperties();
+    const varsString = Array.from(cssVars.entries())
+      .map(([prop, value]) => `  ${prop}: ${value};`)
+      .join('\n');
+    
+    return `:root {\n${varsString}\n}`;
   }
 
   /**
-   * Generate theme variants (light/dark)
+   * Apply CSS custom properties to the document
    */
-  generateThemeVariant(variant: 'light' | 'dark'): DesignTokens {
-    const baseTokens = { ...this.tokens };
-
-    if (variant === 'dark') {
-      // Invert surface colors for dark theme
-      baseTokens.colors.surface = {
-        background: '#09090b',
-        foreground: '#fafafa',
-        card: '#18181b',
-        popover: '#27272a',
-        modal: '#18181b',
-        hover: '#27272a',
-        pressed: '#3f3f46',
-        focus: '#0ea5e9',
-        border: '#27272a',
-        divider: '#3f3f46',
-      };
-
-      // Invert text colors for dark theme
-      baseTokens.colors.text = {
-        primary: '#fafafa',
-        secondary: '#a1a1aa',
-        tertiary: '#71717a',
-        inverse: '#09090b',
-        disabled: '#52525b',
-        placeholder: '#71717a',
-        link: '#38bdf8',
-        linkHover: '#7dd3fc',
-      };
-    }
-
-    return baseTokens;
+  applyCSSCustomProperties(): void {
+    const cssVars = this.generateCSSCustomProperties();
+    const root = document.documentElement;
+    
+    cssVars.forEach((value, property) => {
+      root.style.setProperty(property, value);
+    });
   }
 
   /**
-   * Apply theme variant
+   * Get CSS media query for breakpoint
    */
-  applyTheme(variant: 'light' | 'dark'): void {
-    const themeTokens = this.generateThemeVariant(variant);
-    this.updateTokens(themeTokens);
-    document.documentElement.setAttribute('data-theme', variant);
+  getBreakpointMediaQuery(breakpoint: keyof typeof this.tokens.breakpoints, direction: 'min' | 'max' = 'min'): string {
+    const value = this.tokens.breakpoints[breakpoint];
+    return `@media (${direction}-width: ${value})`;
+  }
+
+  /**
+   * Check if current mode is dark
+   */
+  isDarkMode(): boolean {
+    return themeManager.getCurrentMode() === 'dark';
   }
 
   /**
    * Subscribe to token changes
    */
-  subscribe(observer: (tokens: DesignTokens) => void): () => void {
-    this.observers.add(observer);
-    return () => this.observers.delete(observer);
+  subscribe(callback: (tokens: DesignTokens) => void): () => void {
+    this.observers.add(callback);
+    
+    return () => {
+      this.observers.delete(callback);
+    };
   }
 
   /**
-   * Export tokens as CSS custom properties
-   */
-  toCSSCustomProperties(): string {
-    let css = ':root {\n';
-    for (const [property, value] of this.customProperties) {
-      css += `  ${property}: ${value};\n`;
-    }
-    css += '}\n';
-
-    // Add dark theme
-    css += '[data-theme="dark"] {\n';
-    const darkTokens = this.generateThemeVariant('dark');
-    const darkProperties = this.flattenTokens(darkTokens);
-    for (const [key, value] of Object.entries(darkProperties)) {
-      const cssVar = `--cds-${key.replace(/\./g, '-')}`;
-      css += `  ${cssVar}: ${value};\n`;
-    }
-    css += '}\n';
-
-    return css;
-  }
-
-  /**
-   * Export tokens as SCSS variables
-   */
-  toSCSSVariables(): string {
-    let scss = '// Design Tokens as SCSS Variables\n\n';
-    const flatTokens = this.flattenTokens(this.tokens);
-
-    for (const [key, value] of Object.entries(flatTokens)) {
-      const scssVar = `$${key.replace(/\./g, '-')}`;
-      scss += `${scssVar}: ${value};\n`;
-    }
-
-    return scss;
-  }
-
-  /**
-   * Private: Merge tokens deeply
-   */
-  private mergeTokens(base: DesignTokens, override: Partial<DesignTokens>): DesignTokens {
-    const merged = { ...base };
-
-    for (const [key, value] of Object.entries(override)) {
-      if (value && typeof value === 'object' && !Array.isArray(value)) {
-        (merged as any)[key] = { ...(merged as any)[key], ...value };
-      } else {
-        (merged as any)[key] = value;
-      }
-    }
-
-    return merged;
-  }
-
-  /**
-   * Private: Generate CSS custom properties from tokens
-   */
-  private generateCSSCustomProperties(): void {
-    this.customProperties.clear();
-    const flatTokens = this.flattenTokens(this.tokens);
-
-    for (const [key, value] of Object.entries(flatTokens)) {
-      const cssVar = `--cds-${key.replace(/\./g, '-')}`;
-      this.customProperties.set(cssVar, String(value));
-    }
-  }
-
-  /**
-   * Private: Apply CSS custom properties to document
-   */
-  private applyCSSCustomProperties(): void {
-    if (typeof document === 'undefined') return;
-
-    const root = document.documentElement;
-    for (const [property, value] of this.customProperties) {
-      root.style.setProperty(property, value);
-    }
-  }
-
-  /**
-   * Private: Flatten nested tokens object
-   */
-  private flattenTokens(tokens: any, prefix = ''): Record<string, any> {
-    const flat: Record<string, any> = {};
-
-    for (const [key, value] of Object.entries(tokens)) {
-      const newKey = prefix ? `${prefix}.${key}` : key;
-
-      if (value && typeof value === 'object' && !Array.isArray(value)) {
-        Object.assign(flat, this.flattenTokens(value, newKey));
-      } else {
-        flat[newKey] = value;
-      }
-    }
-
-    return flat;
-  }
-
-  /**
-   * Private: Set nested property by dot notation path
-   */
-  private setNestedProperty(obj: any, path: string, value: any): void {
-    const keys = path.split('.');
-    let current = obj;
-
-    for (let i = 0; i < keys.length - 1; i++) {
-      const key = keys[i];
-      if (!(key in current) || typeof current[key] !== 'object') {
-        current[key] = {};
-      }
-      current = current[key];
-    }
-
-    current[keys[keys.length - 1]] = value;
-  }
-
-  /**
-   * Private: Get nested property by dot notation path
-   */
-  private getNestedProperty(obj: any, path: string): any {
-    return path.split('.').reduce((current, key) => current?.[key], obj);
-  }
-
-  /**
-   * Private: Notify observers of token changes
+   * Notify observers of token changes
    */
   private notifyObservers(): void {
-    for (const observer of this.observers) {
-      observer(this.tokens);
-    }
+    this.observers.forEach(callback => {
+      callback(this.tokens);
+    });
+  }
+
+  /**
+   * Create utility class definitions
+   */
+  generateUtilityClasses(): Record<string, Record<string, Record<string, string>>> {
+    const utilities: Record<string, Record<string, Record<string, string>>> = {};
+
+    // Color utilities
+    utilities.colors = {};
+    
+    // Semantic color utilities
+    const semanticColors = ['primary', 'doom', 'white', 'critical', 'warning', 'success', 'interactive'] as const;
+    semanticColors.forEach(colorName => {
+      utilities.colors[`bg-${colorName}`] = {
+        'background-color': `var(--color-${colorName})`,
+        'color': `var(--color-${colorName}-foreground)`
+      };
+      
+      utilities.colors[`text-${colorName}`] = {
+        'color': `var(--color-${colorName})`
+      };
+      
+      utilities.colors[`border-${colorName}`] = {
+        'border-color': `var(--color-${colorName})`
+      };
+      
+      // Hover states
+      utilities.colors[`hover\\:bg-${colorName}:hover`] = {
+        'background-color': `var(--color-${colorName}-hover)`,
+        'color': `var(--color-${colorName}-foreground)`
+      };
+    });
+
+    // Spacing utilities
+    utilities.spacing = {};
+    Object.keys(this.tokens.spacing).forEach(key => {
+      const className = key.replace('.', '-');
+      utilities.spacing[`p-${className}`] = { 'padding': `var(--spacing-${className})` };
+      utilities.spacing[`m-${className}`] = { 'margin': `var(--spacing-${className})` };
+      utilities.spacing[`px-${className}`] = { 
+        'padding-left': `var(--spacing-${className})`,
+        'padding-right': `var(--spacing-${className})`
+      };
+      utilities.spacing[`py-${className}`] = { 
+        'padding-top': `var(--spacing-${className})`,
+        'padding-bottom': `var(--spacing-${className})`
+      };
+      utilities.spacing[`mx-${className}`] = { 
+        'margin-left': `var(--spacing-${className})`,
+        'margin-right': `var(--spacing-${className})`
+      };
+      utilities.spacing[`my-${className}`] = { 
+        'margin-top': `var(--spacing-${className})`,
+        'margin-bottom': `var(--spacing-${className})`
+      };
+    });
+
+    // Typography utilities
+    utilities.typography = {};
+    Object.keys(this.tokens.typography.fontSize).forEach(key => {
+      utilities.typography[`text-${key}`] = {
+        'font-size': `var(--font-size-${key})`
+      };
+    });
+
+    Object.keys(this.tokens.typography.fontWeight).forEach(key => {
+      utilities.typography[`font-${key}`] = {
+        'font-weight': `var(--font-weight-${key})`
+      };
+    });
+
+    // Border utilities
+    utilities.borders = {};
+    Object.keys(this.tokens.borders.radius).forEach(key => {
+      utilities.borders[`rounded-${key}`] = {
+        'border-radius': `var(--border-radius-${key})`
+      };
+    });
+
+    // Shadow utilities
+    utilities.shadows = {};
+    Object.keys(this.tokens.shadows).forEach(key => {
+      if (key !== 'none') {
+        utilities.shadows[`shadow-${key}`] = {
+          'box-shadow': `var(--shadow-${key})`
+        };
+      }
+    });
+    utilities.shadows['shadow-none'] = { 'box-shadow': 'none' };
+
+    return utilities;
   }
 }
 
-// Global token manager instance
+// Create global token manager instance
 export const tokenManager = new TokenManager();
+
+// Export for global access
+if (typeof window !== 'undefined') {
+  (window as any).tokenManager = tokenManager;
+}

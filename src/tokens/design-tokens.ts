@@ -1,11 +1,77 @@
 /**
- * Design Tokens Configuration
- * Central configuration for all design tokens including colors, typography, spacing, etc.
- * Supports multiple themes with light/dark mode variants and WCAG AA contrast compliance
+ * Advanced Design Tokens System
+ * Intelligent theming with automatic color contrast and dark/light mode support
+ * Based on semantic color roles from the provided color palette
  */
 
+// Color calculation utilities
+export function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+
+export function getLuminance(hex: string): number {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return 0;
+
+  const { r, g, b } = rgb;
+  const [rs, gs, bs] = [r, g, b].map(c => {
+    c = c / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+
+  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+}
+
+export function getContrastRatio(color1: string, color2: string): number {
+  const lum1 = getLuminance(color1);
+  const lum2 = getLuminance(color2);
+  const lighter = Math.max(lum1, lum2);
+  const darker = Math.min(lum1, lum2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+export function getOptimalTextColor(backgroundColor: string): string {
+  const whiteContrast = getContrastRatio(backgroundColor, '#FFFFFF');
+  const blackContrast = getContrastRatio(backgroundColor, '#000000');
+  return whiteContrast > blackContrast ? '#FFFFFF' : '#000000';
+}
+
+export function addOpacity(hex: string, opacity: number): string {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return hex;
+  return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`;
+}
+
+export function darken(hex: string, amount: number): string {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return hex;
+  
+  const darkenedR = Math.max(0, rgb.r - Math.round(255 * amount));
+  const darkenedG = Math.max(0, rgb.g - Math.round(255 * amount));
+  const darkenedB = Math.max(0, rgb.b - Math.round(255 * amount));
+  
+  return `#${darkenedR.toString(16).padStart(2, '0')}${darkenedG.toString(16).padStart(2, '0')}${darkenedB.toString(16).padStart(2, '0')}`;
+}
+
+export function lighten(hex: string, amount: number): string {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return hex;
+  
+  const lightenedR = Math.min(255, rgb.r + Math.round(255 * amount));
+  const lightenedG = Math.min(255, rgb.g + Math.round(255 * amount));
+  const lightenedB = Math.min(255, rgb.b + Math.round(255 * amount));
+  
+  return `#${lightenedR.toString(16).padStart(2, '0')}${lightenedG.toString(16).padStart(2, '0')}${lightenedB.toString(16).padStart(2, '0')}`;
+}
+
+// Core Design Token Interfaces
 export interface DesignTokens {
-  colors: ColorTokens;
+  colors: ColorSystem;
   typography: TypographyTokens;
   spacing: SpacingTokens;
   shadows: ShadowTokens;
@@ -15,30 +81,76 @@ export interface DesignTokens {
   zIndex: ZIndexTokens;
 }
 
-export interface ColorTokens {
-  primary: ColorScale;
-  secondary: ColorScale;
-  accent: ColorScale;
-  success: ColorScale;
-  warning: ColorScale;
-  error: ColorScale;
-  info: ColorScale;
+export interface ColorSystem {
+  // Semantic colors from the palette
+  primary: ThemeAwareColor;    // #6C5CE7 (Purple)
+  doom: ThemeAwareColor;       // #2B2B2B (Dark Gray/Black)
+  white: ThemeAwareColor;      // #FFFFFF (White)
+  critical: ThemeAwareColor;   // #E62E5C (Red/Pink)
+  warning: ThemeAwareColor;    // #E6E5C (Yellow/Orange)
+  success: ThemeAwareColor;    // #37B26C (Green)
+  interactive: ThemeAwareColor; // #0984E3 (Blue)
+  
+  // System colors
   neutral: ColorScale;
   surface: SurfaceColors;
   text: TextColors;
-  semantic: SemanticColors;
+  border: BorderColors;
+  
+  // Mode-specific overrides
+  light: ModeColors;
+  dark: ModeColors;
 }
 
-export interface SemanticColors {
-  destructive: string;
-  destructiveHover: string;
-  destructiveForeground: string;
-  constructive: string;
-  constructiveHover: string;
-  constructiveForeground: string;
-  muted: string;
-  mutedForeground: string;
-  ring: string;
+export interface ThemeAwareColor {
+  // Main color value
+  DEFAULT: string;
+  
+  // Automatic contrast text (calculated based on luminance)
+  foreground: string;
+  
+  // Interactive states
+  hover: string;
+  pressed: string;
+  focus: string;
+  
+  // Opacity variants
+  '10': string;  // 10% opacity
+  '20': string;  // 20% opacity
+  '30': string;  // 30% opacity
+  '50': string;  // 50% opacity
+  '70': string;  // 70% opacity
+  
+  // Accessible variants
+  subtle: string;    // Lighter version for backgrounds
+  muted: string;     // Muted version for secondary elements
+  emphasis: string;  // Darker version for emphasis
+}
+
+export interface ModeColors {
+  background: string;
+  foreground: string;
+  surface: {
+    primary: string;
+    secondary: string;
+    tertiary: string;
+    elevated: string;
+    overlay: string;
+  };
+  text: {
+    primary: string;
+    secondary: string;
+    tertiary: string;
+    inverse: string;
+    disabled: string;
+    placeholder: string;
+  };
+  border: {
+    default: string;
+    subtle: string;
+    strong: string;
+    focus: string;
+  };
 }
 
 export interface ColorScale {
@@ -79,6 +191,50 @@ export interface TextColors {
   linkHover: string;
 }
 
+export interface BorderColors {
+  default: string;
+  subtle: string;
+  strong: string;
+  interactive: string;
+  focus: string;
+  error: string;
+  warning: string;
+  success: string;
+}
+
+// Helper function to create theme-aware colors
+export function createThemeAwareColor(baseColor: string): ThemeAwareColor {
+  const foreground = getOptimalTextColor(baseColor);
+  
+  return {
+    DEFAULT: baseColor,
+    foreground,
+    hover: darken(baseColor, 0.1),
+    pressed: darken(baseColor, 0.2),
+    focus: addOpacity(baseColor, 0.2),
+    '10': addOpacity(baseColor, 0.1),
+    '20': addOpacity(baseColor, 0.2),
+    '30': addOpacity(baseColor, 0.3),
+    '50': addOpacity(baseColor, 0.5),
+    '70': addOpacity(baseColor, 0.7),
+    subtle: lighten(baseColor, 0.4),
+    muted: addOpacity(baseColor, 0.6),
+    emphasis: darken(baseColor, 0.15)
+  };
+}
+
+// Base color palette (from your image)
+export const BASE_COLORS = {
+  primary: '#6C5CE7',    // Purple
+  doom: '#2B2B2B',       // Dark Gray/Black  
+  white: '#FFFFFF',      // White
+  critical: '#E62E5C',   // Red/Pink
+  warning: '#E6E35C',    // Yellow
+  success: '#37B26C',    // Green
+  interactive: '#0984E3' // Blue
+} as const;
+
+// Typography tokens
 export interface TypographyTokens {
   fontFamily: {
     sans: string[];
@@ -105,14 +261,15 @@ export interface TypographyTokens {
     semibold: number;
     bold: number;
     extrabold: number;
+    black: number;
   };
   lineHeight: {
-    none: string;
-    tight: string;
-    snug: string;
-    normal: string;
-    relaxed: string;
-    loose: string;
+    none: number;
+    tight: number;
+    snug: number;
+    normal: number;
+    relaxed: number;
+    loose: number;
   };
   letterSpacing: {
     tighter: string;
@@ -124,11 +281,17 @@ export interface TypographyTokens {
   };
 }
 
+// Spacing tokens
 export interface SpacingTokens {
   0: string;
+  px: string;
+  0.5: string;
   1: string;
+  1.5: string;
   2: string;
+  2.5: string;
   3: string;
+  3.5: string;
   4: string;
   5: string;
   6: string;
@@ -157,8 +320,8 @@ export interface SpacingTokens {
   96: string;
 }
 
+// Shadow tokens
 export interface ShadowTokens {
-  none: string;
   sm: string;
   base: string;
   md: string;
@@ -166,8 +329,10 @@ export interface ShadowTokens {
   xl: string;
   '2xl': string;
   inner: string;
+  none: string;
 }
 
+// Border tokens
 export interface BorderTokens {
   width: {
     0: string;
@@ -189,6 +354,7 @@ export interface BorderTokens {
   };
 }
 
+// Transition tokens
 export interface TransitionTokens {
   duration: {
     75: string;
@@ -204,10 +370,11 @@ export interface TransitionTokens {
     linear: string;
     in: string;
     out: string;
-    'in-out': string;
+    inOut: string;
   };
 }
 
+// Breakpoint tokens
 export interface BreakpointTokens {
   sm: string;
   md: string;
@@ -216,131 +383,54 @@ export interface BreakpointTokens {
   '2xl': string;
 }
 
+// Z-index tokens
 export interface ZIndexTokens {
-  hide: number;
-  base: number;
-  docked: number;
-  dropdown: number;
-  sticky: number;
-  banner: number;
-  overlay: number;
-  modal: number;
-  popover: number;
-  skipLink: number;
-  toast: number;
-  tooltip: number;
+  auto: string;
+  0: number;
+  10: number;
+  20: number;
+  30: number;
+  40: number;
+  50: number;
 }
 
-/**
- * Default Design Tokens - Light Theme (Ocean Blue)
- * High contrast colors following WCAG AA guidelines
- */
+// Theme configuration
+export interface ThemeConfig {
+  name: string;
+  mode: 'light' | 'dark';
+  colors: ColorSystem;
+}
+
+export type ThemeMode = 'light' | 'dark';
+
+// Default tokens implementation
 export const defaultTokens: DesignTokens = {
   colors: {
-    primary: {
-      50: '#f0f9ff',
-      100: '#e0f2fe',
-      200: '#bae6fd',
-      300: '#7dd3fc',
-      400: '#38bdf8',
-      500: '#0ea5e9', // Main primary color
-      600: '#0284c7', // Hover state (darker for contrast)
-      700: '#0369a1',
-      800: '#075985',
-      900: '#0c4a6e',
-      950: '#082f49',
-    },
-    secondary: {
-      50: '#f8fafc',
-      100: '#f1f5f9',
-      200: '#e2e8f0',
-      300: '#cbd5e1',
-      400: '#94a3b8',
-      500: '#64748b', // Main secondary color
-      600: '#475569', // Hover state
-      700: '#334155',
-      800: '#1e293b',
-      900: '#0f172a',
-      950: '#020617',
-    },
-    accent: {
-      50: '#fdf2f8',
-      100: '#fce7f3',
-      200: '#fbcfe8',
-      300: '#f9a8d4',
-      400: '#f472b6',
-      500: '#ec4899', // Main accent color
-      600: '#db2777', // Hover state
-      700: '#be185d',
-      800: '#9d174d',
-      900: '#831843',
-      950: '#500724',
-    },
-    success: {
-      50: '#f0fdf4',
-      100: '#dcfce7',
-      200: '#bbf7d0',
-      300: '#86efac',
-      400: '#4ade80',
-      500: '#22c55e', // Main success color
-      600: '#16a34a', // Hover state
-      700: '#15803d',
-      800: '#166534',
-      900: '#14532d',
-      950: '#052e16',
-    },
-    warning: {
-      50: '#fffbeb',
-      100: '#fef3c7',
-      200: '#fde68a',
-      300: '#fcd34d',
-      400: '#fbbf24',
-      500: '#f59e0b', // Main warning color
-      600: '#d97706', // Hover state
-      700: '#b45309',
-      800: '#92400e',
-      900: '#78350f',
-      950: '#451a03',
-    },
-    error: {
-      50: '#fef2f2',
-      100: '#fee2e2',
-      200: '#fecaca',
-      300: '#fca5a5',
-      400: '#f87171',
-      500: '#ef4444', // Main error color
-      600: '#dc2626', // Hover state
-      700: '#b91c1c',
-      800: '#991b1b',
-      900: '#7f1d1d',
-      950: '#450a0a',
-    },
-    info: {
-      50: '#f0f9ff',
-      100: '#e0f2fe',
-      200: '#bae6fd',
-      300: '#7dd3fc',
-      400: '#38bdf8',
-      500: '#0ea5e9', // Main info color (same as primary)
-      600: '#0284c7', // Hover state
-      700: '#0369a1',
-      800: '#075985',
-      900: '#0c4a6e',
-      950: '#082f49',
-    },
+    // Semantic colors with intelligent contrast
+    primary: createThemeAwareColor(BASE_COLORS.primary),
+    doom: createThemeAwareColor(BASE_COLORS.doom),
+    white: createThemeAwareColor(BASE_COLORS.white),
+    critical: createThemeAwareColor(BASE_COLORS.critical),
+    warning: createThemeAwareColor(BASE_COLORS.warning),
+    success: createThemeAwareColor(BASE_COLORS.success),
+    interactive: createThemeAwareColor(BASE_COLORS.interactive),
+
+    // Neutral color scale
     neutral: {
       50: '#fafafa',
-      100: '#f4f4f5',
-      200: '#e4e4e7',
-      300: '#d4d4d8',
-      400: '#a1a1aa',
-      500: '#71717a',
-      600: '#52525b',
-      700: '#3f3f46',
-      800: '#27272a',
-      900: '#18181b',
-      950: '#09090b',
+      100: '#f5f5f5',
+      200: '#e5e5e5',
+      300: '#d4d4d4',
+      400: '#a3a3a3',
+      500: '#737373',
+      600: '#525252',
+      700: '#404040',
+      800: '#262626',
+      900: '#171717',
+      950: '#0a0a0a'
     },
+
+    // Surface colors for light mode
     surface: {
       background: '#ffffff',
       foreground: '#09090b',
@@ -349,53 +439,95 @@ export const defaultTokens: DesignTokens = {
       modal: '#ffffff',
       hover: '#f4f4f5',
       pressed: '#e4e4e7',
-      focus: '#0ea5e9',
+      focus: '#f1f5f9',
       border: '#e4e4e7',
-      divider: '#f4f4f5',
+      divider: '#f1f5f9'
     },
+
+    // Text colors for light mode
     text: {
-      primary: '#09090b', // High contrast on white
-      secondary: '#52525b', // Medium contrast
-      tertiary: '#71717a', // Lower contrast
-      inverse: '#ffffff', // White text on dark backgrounds
+      primary: '#09090b',
+      secondary: '#71717a',
+      tertiary: '#a1a1aa',
+      inverse: '#fafafa',
       disabled: '#d4d4d8',
       placeholder: '#a1a1aa',
-      link: '#0284c7', // Darker blue for better contrast
-      linkHover: '#0369a1', // Even darker on hover
+      link: '#2563eb',
+      linkHover: '#1d4ed8'
     },
-    semantic: {
-      destructive: '#dc2626',
-      destructiveHover: '#b91c1c',
-      destructiveForeground: '#ffffff',
-      constructive: '#16a34a',
-      constructiveHover: '#15803d',
-      constructiveForeground: '#ffffff',
-      muted: '#f4f4f5',
-      mutedForeground: '#71717a',
-      ring: '#0ea5e9',
+
+    // Border colors
+    border: {
+      default: '#e4e4e7',
+      subtle: '#f1f5f9',
+      strong: '#d4d4d8',
+      interactive: '#2563eb',
+      focus: '#3b82f6',
+      error: '#ef4444',
+      warning: '#f59e0b',
+      success: '#10b981'
     },
+
+    // Light mode colors
+    light: {
+      background: '#ffffff',
+      foreground: '#09090b',
+      surface: {
+        primary: '#ffffff',
+        secondary: '#f8fafc',
+        tertiary: '#f1f5f9',
+        elevated: '#ffffff',
+        overlay: 'rgba(0, 0, 0, 0.5)'
+      },
+      text: {
+        primary: '#09090b',
+        secondary: '#64748b',
+        tertiary: '#94a3b8',
+        inverse: '#ffffff',
+        disabled: '#cbd5e1',
+        placeholder: '#94a3b8'
+      },
+      border: {
+        default: '#e2e8f0',
+        subtle: '#f1f5f9',
+        strong: '#cbd5e1',
+        focus: '#3b82f6'
+      }
+    },
+
+    // Dark mode colors
+    dark: {
+      background: '#09090b',
+      foreground: '#fafafa',
+      surface: {
+        primary: '#09090b',
+        secondary: '#1a1a1a',
+        tertiary: '#262626',
+        elevated: '#1a1a1a',
+        overlay: 'rgba(0, 0, 0, 0.8)'
+      },
+      text: {
+        primary: '#fafafa',
+        secondary: '#a1a1aa',
+        tertiary: '#71717a',
+        inverse: '#09090b',
+        disabled: '#52525b',
+        placeholder: '#71717a'
+      },
+      border: {
+        default: '#27272a',
+        subtle: '#1a1a1a',
+        strong: '#3f3f46',
+        focus: '#3b82f6'
+      }
+    }
   },
+
   typography: {
     fontFamily: {
-      sans: [
-        'Inter',
-        '-apple-system',
-        'BlinkMacSystemFont',
-        'Segoe UI',
-        'Roboto',
-        'Helvetica Neue',
-        'Arial',
-        'sans-serif',
-      ],
+      sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
       serif: ['Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
-      mono: [
-        'SF Mono',
-        'Monaco',
-        'Inconsolata',
-        'Roboto Mono',
-        'Consolas',
-        'monospace',
-      ],
+      mono: ['Fira Code', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace']
     },
     fontSize: {
       xs: '0.75rem',
@@ -407,7 +539,7 @@ export const defaultTokens: DesignTokens = {
       '3xl': '1.875rem',
       '4xl': '2.25rem',
       '5xl': '3rem',
-      '6xl': '3.75rem',
+      '6xl': '3.75rem'
     },
     fontWeight: {
       thin: 100,
@@ -417,14 +549,15 @@ export const defaultTokens: DesignTokens = {
       semibold: 600,
       bold: 700,
       extrabold: 800,
+      black: 900
     },
     lineHeight: {
-      none: '1',
-      tight: '1.25',
-      snug: '1.375',
-      normal: '1.5',
-      relaxed: '1.625',
-      loose: '2',
+      none: 1,
+      tight: 1.25,
+      snug: 1.375,
+      normal: 1.5,
+      relaxed: 1.625,
+      loose: 2
     },
     letterSpacing: {
       tighter: '-0.05em',
@@ -432,14 +565,20 @@ export const defaultTokens: DesignTokens = {
       normal: '0em',
       wide: '0.025em',
       wider: '0.05em',
-      widest: '0.1em',
-    },
+      widest: '0.1em'
+    }
   },
+
   spacing: {
-    0: '0',
+    0: '0px',
+    px: '1px',
+    0.5: '0.125rem',
     1: '0.25rem',
+    1.5: '0.375rem',
     2: '0.5rem',
+    2.5: '0.625rem',
     3: '0.75rem',
+    3.5: '0.875rem',
     4: '1rem',
     5: '1.25rem',
     6: '1.5rem',
@@ -465,10 +604,10 @@ export const defaultTokens: DesignTokens = {
     64: '16rem',
     72: '18rem',
     80: '20rem',
-    96: '24rem',
+    96: '24rem'
   },
+
   shadows: {
-    none: 'none',
     sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
     base: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
     md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
@@ -476,17 +615,19 @@ export const defaultTokens: DesignTokens = {
     xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
     '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
     inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
+    none: '0 0 #0000'
   },
+
   borders: {
     width: {
-      0: '0',
+      0: '0px',
       1: '1px',
       2: '2px',
       4: '4px',
-      8: '8px',
+      8: '8px'
     },
     radius: {
-      none: '0',
+      none: '0px',
       sm: '0.125rem',
       base: '0.25rem',
       md: '0.375rem',
@@ -494,9 +635,10 @@ export const defaultTokens: DesignTokens = {
       xl: '0.75rem',
       '2xl': '1rem',
       '3xl': '1.5rem',
-      full: '9999px',
-    },
+      full: '9999px'
+    }
   },
+
   transitions: {
     duration: {
       75: '75ms',
@@ -506,438 +648,90 @@ export const defaultTokens: DesignTokens = {
       300: '300ms',
       500: '500ms',
       700: '700ms',
-      1000: '1000ms',
+      1000: '1000ms'
     },
     timing: {
       linear: 'linear',
       in: 'cubic-bezier(0.4, 0, 1, 1)',
       out: 'cubic-bezier(0, 0, 0.2, 1)',
-      'in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
-    },
+      inOut: 'cubic-bezier(0.4, 0, 0.2, 1)'
+    }
   },
+
   breakpoints: {
     sm: '640px',
     md: '768px',
     lg: '1024px',
     xl: '1280px',
-    '2xl': '1536px',
+    '2xl': '1536px'
   },
+
   zIndex: {
-    hide: -1,
-    base: 0,
-    docked: 10,
-    dropdown: 1000,
-    sticky: 1100,
-    banner: 1200,
-    overlay: 1300,
-    modal: 1400,
-    popover: 1500,
-    skipLink: 1600,
-    toast: 1700,
-    tooltip: 1800,
-  },
+    auto: 'auto',
+    0: 0,
+    10: 10,
+    20: 20,
+    30: 30,
+    40: 40,
+    50: 50
+  }
 };
 
-/**
- * Dark Theme Tokens - Ocean Blue Dark
- * High contrast colors following WCAG AA guidelines for dark mode
- */
+// Dark mode tokens
 export const darkTokens: DesignTokens = {
   ...defaultTokens,
   colors: {
     ...defaultTokens.colors,
+    
+    // Override surface colors for dark mode
     surface: {
       background: '#09090b',
       foreground: '#fafafa',
-      card: '#18181b',
-      popover: '#27272a',
-      modal: '#18181b',
-      hover: '#27272a',
-      pressed: '#3f3f46',
-      focus: '#38bdf8',
+      card: '#0a0a0a',
+      popover: '#09090b',
+      modal: '#0a0a0a',
+      hover: '#1a1a1a',
+      pressed: '#262626',
+      focus: '#1e293b',
       border: '#27272a',
-      divider: '#3f3f46',
+      divider: '#1a1a1a'
     },
+
+    // Override text colors for dark mode
     text: {
-      primary: '#fafafa', // High contrast on dark
-      secondary: '#d4d4d8', // Medium contrast
-      tertiary: '#a1a1aa', // Lower contrast
-      inverse: '#09090b', // Dark text on light backgrounds
+      primary: '#fafafa',
+      secondary: '#a1a1aa',
+      tertiary: '#71717a',
+      inverse: '#09090b',
       disabled: '#52525b',
       placeholder: '#71717a',
-      link: '#60a5fa', // Lighter blue for dark backgrounds
-      linkHover: '#93c5fd', // Even lighter on hover
+      link: '#60a5fa',
+      linkHover: '#93c5fd'
     },
-    semantic: {
-      destructive: '#ef4444',
-      destructiveHover: '#f87171',
-      destructiveForeground: '#ffffff',
-      constructive: '#22c55e',
-      constructiveHover: '#4ade80',
-      constructiveForeground: '#000000',
-      muted: '#27272a',
-      mutedForeground: '#a1a1aa',
-      ring: '#38bdf8',
-    },
-  },
-};
 
-/**
- * Forest Green Theme - Light
- */
-export const forestLightTokens: DesignTokens = {
-  ...defaultTokens,
-  colors: {
-    ...defaultTokens.colors,
-    primary: {
-      50: '#f0fdf4',
-      100: '#dcfce7',
-      200: '#bbf7d0',
-      300: '#86efac',
-      400: '#4ade80',
-      500: '#22c55e', // Main primary color
-      600: '#16a34a', // Hover state
-      700: '#15803d',
-      800: '#166534',
-      900: '#14532d',
-      950: '#052e16',
-    },
-    secondary: {
-      50: '#fefce8',
-      100: '#fef3c7',
-      200: '#fde68a',
-      300: '#fcd34d',
-      400: '#fbbf24',
-      500: '#f59e0b', // Main secondary color
-      600: '#d97706', // Hover state
-      700: '#b45309',
-      800: '#92400e',
-      900: '#78350f',
-      950: '#451a03',
-    },
-    accent: {
-      50: '#f0f9ff',
-      100: '#e0f2fe',
-      200: '#bae6fd',
-      300: '#7dd3fc',
-      400: '#38bdf8',
-      500: '#0ea5e9', // Main accent color
-      600: '#0284c7', // Hover state
-      700: '#0369a1',
-      800: '#075985',
-      900: '#0c4a6e',
-      950: '#082f49',
-    },
-    text: {
-      primary: '#052e16', // Dark green for text
-      secondary: '#166534',
-      tertiary: '#22c55e',
-      inverse: '#ffffff',
-      disabled: '#bbf7d0',
-      placeholder: '#86efac',
-      link: '#15803d',
-      linkHover: '#166534',
-    },
-  },
-};
-
-/**
- * Forest Green Theme - Dark
- */
-export const forestDarkTokens: DesignTokens = {
-  ...forestLightTokens,
-  colors: {
-    ...forestLightTokens.colors,
-    surface: {
-      background: '#052e16',
-      foreground: '#f0fdf4',
-      card: '#14532d',
-      popover: '#166534',
-      modal: '#14532d',
-      hover: '#166534',
-      pressed: '#15803d',
-      focus: '#4ade80',
-      border: '#166534',
-      divider: '#15803d',
-    },
-    text: {
-      primary: '#f0fdf4',
-      secondary: '#dcfce7',
-      tertiary: '#bbf7d0',
-      inverse: '#052e16',
-      disabled: '#166534',
-      placeholder: '#22c55e',
-      link: '#86efac',
-      linkHover: '#bbf7d0',
-    },
-    semantic: {
-      destructive: '#ef4444',
-      destructiveHover: '#f87171',
-      destructiveForeground: '#ffffff',
-      constructive: '#4ade80',
-      constructiveHover: '#86efac',
-      constructiveForeground: '#000000',
-      muted: '#166534',
-      mutedForeground: '#bbf7d0',
-      ring: '#4ade80',
-    },
-  },
-};
-
-/**
- * Purple Cosmic Theme - Light
- */
-export const cosmicLightTokens: DesignTokens = {
-  ...defaultTokens,
-  colors: {
-    ...defaultTokens.colors,
-    primary: {
-      50: '#faf5ff',
-      100: '#f3e8ff',
-      200: '#e9d5ff',
-      300: '#d8b4fe',
-      400: '#c084fc',
-      500: '#a855f7', // Main primary color
-      600: '#9333ea', // Hover state
-      700: '#7c3aed',
-      800: '#6b21a8',
-      900: '#581c87',
-      950: '#3b0764',
-    },
-    secondary: {
-      50: '#fdf2f8',
-      100: '#fce7f3',
-      200: '#fbcfe8',
-      300: '#f9a8d4',
-      400: '#f472b6',
-      500: '#ec4899', // Main secondary color
-      600: '#db2777', // Hover state
-      700: '#be185d',
-      800: '#9d174d',
-      900: '#831843',
-      950: '#500724',
-    },
-    accent: {
-      50: '#f0f9ff',
-      100: '#e0f2fe',
-      200: '#bae6fd',
-      300: '#7dd3fc',
-      400: '#38bdf8',
-      500: '#0ea5e9', // Main accent color
-      600: '#0284c7', // Hover state
-      700: '#0369a1',
-      800: '#075985',
-      900: '#0c4a6e',
-      950: '#082f49',
-    },
-    text: {
-      primary: '#3b0764', // Dark purple for text
-      secondary: '#6b21a8',
-      tertiary: '#9333ea',
-      inverse: '#ffffff',
-      disabled: '#e9d5ff',
-      placeholder: '#d8b4fe',
-      link: '#7c3aed',
-      linkHover: '#6b21a8',
-    },
-  },
-};
-
-/**
- * Purple Cosmic Theme - Dark
- */
-export const cosmicDarkTokens: DesignTokens = {
-  ...cosmicLightTokens,
-  colors: {
-    ...cosmicLightTokens.colors,
-    surface: {
-      background: '#3b0764',
-      foreground: '#faf5ff',
-      card: '#581c87',
-      popover: '#6b21a8',
-      modal: '#581c87',
-      hover: '#6b21a8',
-      pressed: '#7c3aed',
-      focus: '#c084fc',
-      border: '#6b21a8',
-      divider: '#7c3aed',
-    },
-    text: {
-      primary: '#faf5ff',
-      secondary: '#f3e8ff',
-      tertiary: '#e9d5ff',
-      inverse: '#3b0764',
-      disabled: '#6b21a8',
-      placeholder: '#a855f7',
-      link: '#d8b4fe',
-      linkHover: '#e9d5ff',
-    },
-    semantic: {
-      destructive: '#ef4444',
-      destructiveHover: '#f87171',
-      destructiveForeground: '#ffffff',
-      constructive: '#22c55e',
-      constructiveHover: '#4ade80',
-      constructiveForeground: '#000000',
-      muted: '#6b21a8',
-      mutedForeground: '#e9d5ff',
-      ring: '#c084fc',
-    },
-  },
-};
-
-/**
- * Sunset Orange Theme - Light
- */
-export const sunsetLightTokens: DesignTokens = {
-  ...defaultTokens,
-  colors: {
-    ...defaultTokens.colors,
-    primary: {
-      50: '#fff7ed',
-      100: '#ffedd5',
-      200: '#fed7aa',
-      300: '#fdba74',
-      400: '#fb923c',
-      500: '#f97316', // Main primary color
-      600: '#ea580c', // Hover state
-      700: '#c2410c',
-      800: '#9a3412',
-      900: '#7c2d12',
-      950: '#431407',
-    },
-    secondary: {
-      50: '#fefce8',
-      100: '#fef3c7',
-      200: '#fde68a',
-      300: '#fcd34d',
-      400: '#fbbf24',
-      500: '#f59e0b', // Main secondary color
-      600: '#d97706', // Hover state
-      700: '#b45309',
-      800: '#92400e',
-      900: '#78350f',
-      950: '#451a03',
-    },
-    accent: {
-      50: '#fef2f2',
-      100: '#fee2e2',
-      200: '#fecaca',
-      300: '#fca5a5',
-      400: '#f87171',
-      500: '#ef4444', // Main accent color
-      600: '#dc2626', // Hover state
-      700: '#b91c1c',
-      800: '#991b1b',
-      900: '#7f1d1d',
-      950: '#450a0a',
-    },
-    text: {
-      primary: '#431407', // Dark orange for text
-      secondary: '#9a3412',
-      tertiary: '#c2410c',
-      inverse: '#ffffff',
-      disabled: '#fed7aa',
-      placeholder: '#fdba74',
-      link: '#c2410c',
-      linkHover: '#9a3412',
-    },
-  },
-};
-
-/**
- * Sunset Orange Theme - Dark
- */
-export const sunsetDarkTokens: DesignTokens = {
-  ...sunsetLightTokens,
-  colors: {
-    ...sunsetLightTokens.colors,
-    surface: {
-      background: '#431407',
-      foreground: '#fff7ed',
-      card: '#7c2d12',
-      popover: '#9a3412',
-      modal: '#7c2d12',
-      hover: '#9a3412',
-      pressed: '#c2410c',
-      focus: '#fb923c',
-      border: '#9a3412',
-      divider: '#c2410c',
-    },
-    text: {
-      primary: '#fff7ed',
-      secondary: '#ffedd5',
-      tertiary: '#fed7aa',
-      inverse: '#431407',
-      disabled: '#9a3412',
-      placeholder: '#f97316',
-      link: '#fdba74',
-      linkHover: '#fed7aa',
-    },
-    semantic: {
-      destructive: '#ef4444',
-      destructiveHover: '#f87171',
-      destructiveForeground: '#ffffff',
-      constructive: '#22c55e',
-      constructiveHover: '#4ade80',
-      constructiveForeground: '#000000',
-      muted: '#9a3412',
-      mutedForeground: '#fed7aa',
-      ring: '#fb923c',
-    },
-  },
-};
-
-/**
- * Theme Registry
- */
-export interface ThemeConfig {
-  id: string;
-  name: string;
-  description: string;
-  light: DesignTokens;
-  dark: DesignTokens;
-}
-
-export const themes: Record<string, ThemeConfig> = {
-  ocean: {
-    id: 'ocean',
-    name: 'Ocean Blue',
-    description: 'Professional blue theme with excellent contrast',
-    light: defaultTokens,
-    dark: darkTokens,
-  },
-  forest: {
-    id: 'forest',
-    name: 'Forest Green',
-    description: 'Natural green theme for eco-friendly designs',
-    light: forestLightTokens,
-    dark: forestDarkTokens,
-  },
-  cosmic: {
-    id: 'cosmic',
-    name: 'Cosmic Purple',
-    description: 'Creative purple theme for artistic applications',
-    light: cosmicLightTokens,
-    dark: cosmicDarkTokens,
-  },
-  sunset: {
-    id: 'sunset',
-    name: 'Sunset Orange',
-    description: 'Warm orange theme for energetic interfaces',
-    light: sunsetLightTokens,
-    dark: sunsetDarkTokens,
-  },
-};
-
-/**
- * Helper function to get theme tokens
- */
-export function getThemeTokens(themeId: string, mode: 'light' | 'dark' = 'light'): DesignTokens {
-  const theme = themes[themeId];
-  if (!theme) {
-    console.warn(`Theme "${themeId}" not found, falling back to ocean theme`);
-    return mode === 'dark' ? darkTokens : defaultTokens;
+    // Override border colors for dark mode
+    border: {
+      default: '#27272a',
+      subtle: '#1a1a1a',
+      strong: '#3f3f46',
+      interactive: '#3b82f6',
+      focus: '#60a5fa',
+      error: '#ef4444',
+      warning: '#f59e0b',
+      success: '#10b981'
+    }
   }
-  return mode === 'dark' ? theme.dark : theme.light;
+};
+
+// Available themes with light and dark variants
+export const themes = {
+  default: {
+    light: defaultTokens,
+    dark: darkTokens
+  }
+} as const;
+
+// Helper function to get theme tokens
+export function getThemeTokens(themeName: keyof typeof themes = 'default', mode: ThemeMode = 'light'): DesignTokens {
+  return themes[themeName][mode];
 }
