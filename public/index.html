@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intelligent Theming System Demo</title>
+        <title>Design System Demo</title>
+    
+    <!-- Material Icons Font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         /* Demo-specific styles */
         body {
@@ -190,6 +195,7 @@
     <div class="theme-controls">
         <h3 style="margin: 0 0 1rem 0;" class="fallback-text-primary">Theme Controls</h3>
         <button class="btn btn-primary" onclick="toggleMode()">
+            <span class="material-icon material-icon--sm" data-theme-icon>dark_mode</span>
             Toggle Dark/Light
         </button>
         <div style="margin-top: 0.5rem; font-size: 0.875rem;" class="fallback-text-secondary">
@@ -303,6 +309,99 @@
             </div>
         </section>
 
+        <!-- Material Icons Demo -->
+        <section class="demo-section">
+            <h2 class="text-2xl font-semibold fallback-text-primary" style="margin-bottom: 1rem;">
+                Material Icons Integration
+            </h2>
+            <p class="fallback-text-secondary" style="margin-bottom: 1rem;">
+                Material Icons integrated with our design system theming. Icons automatically adapt to dark/light modes and use semantic colors.
+            </p>
+            
+            <div style="margin-bottom: 2rem;">
+                <h3 class="fallback-text-primary" style="margin: 1rem 0 0.5rem 0;">Icon Sizes</h3>
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                    <span class="material-icon material-icon--xs material-icon--primary">home</span>
+                    <span class="material-icon material-icon--sm material-icon--primary">home</span>
+                    <span class="material-icon material-icon--md material-icon--primary">home</span>
+                    <span class="material-icon material-icon--lg material-icon--primary">home</span>
+                    <span class="material-icon material-icon--xl material-icon--primary">home</span>
+                    <span class="material-icon material-icon--2xl material-icon--primary">home</span>
+                </div>
+                <div style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.5rem;">
+                    XS → SM → MD → LG → XL → 2XL
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h3 class="fallback-text-primary" style="margin: 1rem 0 0.5rem 0;">Semantic Color Icons</h3>
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                    <span class="material-icon material-icon--lg material-icon--primary" title="Primary">star</span>
+                    <span class="material-icon material-icon--lg material-icon--success" title="Success">check_circle</span>
+                    <span class="material-icon material-icon--lg material-icon--warning" title="Warning">warning</span>
+                    <span class="material-icon material-icon--lg material-icon--critical" title="Critical">error</span>
+                    <span class="material-icon material-icon--lg material-icon--interactive" title="Interactive">info</span>
+                    <span class="material-icon material-icon--lg material-icon--doom" title="Doom">dark_mode</span>
+                    <span class="material-icon material-icon--lg material-icon--secondary" title="Secondary">help</span>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h3 class="fallback-text-primary" style="margin: 1rem 0 0.5rem 0;">Interactive Icons</h3>
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                    <span class="material-icon material-icon--lg material-icon--interactive material-icon--interactive" title="Add">add</span>
+                    <span class="material-icon material-icon--lg material-icon--interactive material-icon--interactive" title="Edit">edit</span>
+                    <span class="material-icon material-icon--lg material-icon--critical material-icon--interactive" title="Delete">delete</span>
+                    <span class="material-icon material-icon--lg material-icon--success material-icon--interactive" title="Save">save</span>
+                    <span class="material-icon material-icon--lg material-icon--primary material-icon--interactive" title="Search">search</span>
+                    <span class="material-icon material-icon--lg material-icon--secondary material-icon--interactive" title="More">more_vert</span>
+                </div>
+                <div style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.5rem;">
+                    Hover over icons to see interactive effects
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h3 class="fallback-text-primary" style="margin: 1rem 0 0.5rem 0;">Icon Buttons</h3>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="btn btn-primary">
+                        <span class="material-icon material-icon--sm">add</span>
+                        Add Item
+                    </button>
+                    <button class="btn btn-success">
+                        <span class="material-icon material-icon--sm">save</span>
+                        Save Changes
+                    </button>
+                    <button class="btn btn-warning">
+                        <span class="material-icon material-icon--sm">warning</span>
+                        Warning
+                    </button>
+                    <button class="btn btn-critical">
+                        <span class="material-icon material-icon--sm">delete</span>
+                        Delete
+                    </button>
+                    <button class="btn btn-icon btn-primary" title="Settings">
+                        <span class="material-icon">settings</span>
+                    </button>
+                    <button class="btn btn-icon btn-interactive" title="Search">
+                        <span class="material-icon">search</span>
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="fallback-text-primary" style="margin: 1rem 0 0.5rem 0;">Navigation Icons</h3>
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                    <span class="material-icon material-icon--lg material-icon--primary material-icon--interactive" title="Menu">menu</span>
+                    <span class="material-icon material-icon--lg material-icon--primary material-icon--interactive" title="Back">arrow_back</span>
+                    <span class="material-icon material-icon--lg material-icon--primary material-icon--interactive" title="Forward">arrow_forward</span>
+                    <span class="material-icon material-icon--lg material-icon--primary material-icon--interactive" title="Up">expand_less</span>
+                    <span class="material-icon material-icon--lg material-icon--primary material-icon--interactive" title="Down">expand_more</span>
+                    <span class="material-icon material-icon--lg material-icon--critical material-icon--interactive" title="Close">close</span>
+                </div>
+            </div>
+        </section>
+
         <!-- Typography System -->
         <section class="demo-section">
             <h2 class="text-2xl font-semibold fallback-text-primary" style="margin-bottom: 1rem;">
@@ -405,5 +504,8 @@
             });
         });
     </script>
+    
+    <!-- Demo Script -->
+    <script src="demo.js"></script>
 </body>
 </html>

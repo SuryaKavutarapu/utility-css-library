@@ -8,6 +8,9 @@
 @use 'abstracts/mixins';
 @use 'base';
 
+// Components
+@use 'components';
+
 // Utility framework (loaded last for highest specificity)
 @use 'utilities';
 
@@ -15,4 +18,5 @@
 @forward 'abstracts/variables';
 @forward 'abstracts/mixins';
 @forward 'base';
+@forward 'components';
 @forward 'utilities';
