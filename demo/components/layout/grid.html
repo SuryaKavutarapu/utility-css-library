@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Components - Ant Design Demo</title>
+    <link rel="stylesheet" href="../../../dist/main.css">
+</head>
+<body class="bg-gray-50 p-6">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-primary-600">Grid Components</h1>
+        
+        <!-- Basic Grid -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Basic Grid</h2>
+            <div class="grid-container space-y-4">
+                <!-- Single Row -->
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-24</div>
+                </div>
+                
+                <!-- Two Columns -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-12</div>
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-12</div>
+                </div>
+                
+                <!-- Three Columns -->
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-8</div>
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-8</div>
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-8</div>
+                </div>
+                
+                <!-- Four Columns -->
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-6</div>
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-6</div>
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-6</div>
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-6</div>
+                </div>
+                
+                <!-- Six Columns -->
+                <div class="grid grid-cols-6 gap-4">
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-4</div>
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-4</div>
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-4</div>
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-4</div>
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-4</div>
+                    <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col-4</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid Gutter -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Grid with Different Gutters</h2>
+            <div class="space-y-6">
+                <!-- No Gutter -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">No Gutter</h3>
+                    <div class="grid grid-cols-4 gap-0">
+                        <div class="bg-primary-100 text-primary-800 p-4 text-center border border-primary-200">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 text-center border border-primary-200">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 text-center border border-primary-200">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 text-center border border-primary-200">col</div>
+                    </div>
+                </div>
+                
+                <!-- Small Gutter -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Small Gutter (8px)</h3>
+                    <div class="grid grid-cols-4 gap-2">
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                    </div>
+                </div>
+                
+                <!-- Medium Gutter -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Medium Gutter (16px)</h3>
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                    </div>
+                </div>
+                
+                <!-- Large Gutter -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Large Gutter (24px)</h3>
+                    <div class="grid grid-cols-4 gap-6">
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">col</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Column Offset -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Column Offset</h2>
+            <div class="space-y-4">
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-8 bg-primary-100 text-primary-800 p-4 rounded text-center">col-8</div>
+                    <div class="col-span-4 col-start-9 bg-primary-100 text-primary-800 p-4 rounded text-center">col-8 offset-8</div>
+                </div>
+                
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-6 col-start-4 bg-primary-100 text-primary-800 p-4 rounded text-center">col-6 offset-6</div>
+                    <div class="col-span-6 bg-primary-100 text-primary-800 p-4 rounded text-center">col-6</div>
+                </div>
+                
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-12 bg-primary-100 text-primary-800 p-4 rounded text-center">col-12 col-offset-12</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid Sort -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Grid Sort</h2>
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-6 order-2 bg-primary-100 text-primary-800 p-4 rounded text-center">col-6 order-2</div>
+                <div class="col-span-6 order-1 bg-primary-100 text-primary-800 p-4 rounded text-center">col-6 order-1</div>
+            </div>
+        </section>
+
+        <!-- Responsive Grid -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Responsive Grid</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">
+                    <div class="text-xs text-gray-600 mb-1">xs:24 md:12 lg:6</div>
+                    Responsive
+                </div>
+                <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">
+                    <div class="text-xs text-gray-600 mb-1">xs:24 md:12 lg:6</div>
+                    Responsive
+                </div>
+                <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">
+                    <div class="text-xs text-gray-600 mb-1">xs:24 md:12 lg:6</div>
+                    Responsive
+                </div>
+                <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">
+                    <div class="text-xs text-gray-600 mb-1">xs:24 md:12 lg:6</div>
+                    Responsive
+                </div>
+            </div>
+        </section>
+
+        <!-- Nested Grid -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Nested Grid</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-gray-100 p-4 rounded">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="bg-primary-100 text-primary-800 p-3 rounded text-center text-sm">50%</div>
+                        <div class="bg-primary-100 text-primary-800 p-3 rounded text-center text-sm">50%</div>
+                    </div>
+                </div>
+                <div class="bg-gray-100 p-4 rounded">
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="bg-primary-100 text-primary-800 p-3 rounded text-center text-sm">33.33%</div>
+                        <div class="bg-primary-100 text-primary-800 p-3 rounded text-center text-sm">33.33%</div>
+                        <div class="bg-primary-100 text-primary-800 p-3 rounded text-center text-sm">33.33%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flex Grid -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Flex Grid</h2>
+            <div class="space-y-4">
+                <!-- Flex Top -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Flex Top</h3>
+                    <div class="flex items-start gap-4 min-h-24 bg-gray-50 p-4 rounded">
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-8 rounded text-center">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">Col</div>
+                    </div>
+                </div>
+                
+                <!-- Flex Middle -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Flex Middle</h3>
+                    <div class="flex items-center gap-4 min-h-24 bg-gray-50 p-4 rounded">
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-8 rounded text-center">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">Col</div>
+                    </div>
+                </div>
+                
+                <!-- Flex Bottom -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Flex Bottom</h3>
+                    <div class="flex items-end gap-4 min-h-24 bg-gray-50 p-4 rounded">
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-8 rounded text-center">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center">Col</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Justify Content -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Justify Content</h2>
+            <div class="space-y-4">
+                <!-- Start -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Start</h3>
+                    <div class="flex justify-start gap-4 bg-gray-50 p-4 rounded">
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                    </div>
+                </div>
+                
+                <!-- Center -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Center</h3>
+                    <div class="flex justify-center gap-4 bg-gray-50 p-4 rounded">
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                    </div>
+                </div>
+                
+                <!-- End -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">End</h3>
+                    <div class="flex justify-end gap-4 bg-gray-50 p-4 rounded">
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                    </div>
+                </div>
+                
+                <!-- Space Between -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Space Between</h3>
+                    <div class="flex justify-between bg-gray-50 p-4 rounded">
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                    </div>
+                </div>
+                
+                <!-- Space Around -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Space Around</h3>
+                    <div class="flex justify-around bg-gray-50 p-4 rounded">
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                        <div class="bg-primary-100 text-primary-800 p-4 rounded text-center w-20">Col</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

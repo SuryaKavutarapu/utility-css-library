@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Components - Ant Design Demo</title>
+    <link rel="stylesheet" href="../../../dist/main.css">
+</head>
+<body class="bg-gray-50 p-6">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-primary-600">Typography Components</h1>
+        
+        <!-- Title -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Title</h2>
+            <div class="space-y-4 bg-white p-6 rounded border">
+                <h1 class="typography-title typography-title--1 text-4xl font-bold text-gray-900">h1. Ant Design</h1>
+                <h2 class="typography-title typography-title--2 text-3xl font-bold text-gray-900">h2. Ant Design</h2>
+                <h3 class="typography-title typography-title--3 text-2xl font-semibold text-gray-900">h3. Ant Design</h3>
+                <h4 class="typography-title typography-title--4 text-xl font-semibold text-gray-900">h4. Ant Design</h4>
+                <h5 class="typography-title typography-title--5 text-lg font-medium text-gray-900">h5. Ant Design</h5>
+            </div>
+        </section>
+
+        <!-- Text -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Text</h2>
+            <div class="space-y-4 bg-white p-6 rounded border">
+                <p class="typography-text text-base text-gray-900">
+                    Ant Design (default)
+                </p>
+                <p class="typography-text typography-text--secondary text-base text-gray-600">
+                    Ant Design (secondary)
+                </p>
+                <p class="typography-text typography-text--success text-base text-green-600">
+                    Ant Design (success)
+                </p>
+                <p class="typography-text typography-text--warning text-base text-yellow-600">
+                    Ant Design (warning)
+                </p>
+                <p class="typography-text typography-text--danger text-base text-red-600">
+                    Ant Design (danger)
+                </p>
+                <p class="typography-text typography-text--disabled text-base text-gray-400">
+                    Ant Design (disabled)
+                </p>
+            </div>
+        </section>
+
+        <!-- Text Marks -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Text Marks</h2>
+            <div class="space-y-4 bg-white p-6 rounded border">
+                <p class="text-base text-gray-900">
+                    <mark class="typography-mark bg-yellow-200 px-1">Ant Design</mark> is a design language.
+                </p>
+                <p class="text-base text-gray-900">
+                    <code class="typography-code bg-gray-100 text-gray-800 px-1 rounded font-mono text-sm">console.log('Hello, Ant Design!')</code>
+                </p>
+                <p class="text-base text-gray-900">
+                    <kbd class="typography-kbd bg-gray-200 text-gray-800 px-2 py-1 rounded text-sm font-mono border border-gray-300">Ctrl + C</kbd>
+                </p>
+                <p class="text-base text-gray-900">
+                    <u class="typography-underline underline">Underlined text</u>
+                </p>
+                <p class="text-base text-gray-900">
+                    <del class="typography-delete line-through text-gray-500">Deleted text</del>
+                </p>
+                <p class="text-base text-gray-900">
+                    <strong class="typography-strong font-bold">Strong text</strong>
+                </p>
+                <p class="text-base text-gray-900">
+                    <em class="typography-italic italic">Italic text</em>
+                </p>
+            </div>
+        </section>
+
+        <!-- Interactive -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Interactive</h2>
+            <div class="space-y-4 bg-white p-6 rounded border">
+                <!-- Editable Text -->
+                <div class="typography-editable">
+                    <span class="editable-text text-base text-gray-900 hover:bg-gray-50 px-2 py-1 rounded cursor-pointer border border-transparent hover:border-gray-300" onclick="editText(this)">
+                        This is an editable text.
+                    </span>
+                </div>
+                
+                <!-- Copyable Text -->
+                <div class="typography-copyable">
+                    <span class="copyable-text text-base text-gray-900 relative inline-flex items-center">
+                        This is a copyable text.
+                        <button class="ml-2 text-gray-400 hover:text-gray-600 focus:outline-none" onclick="copyText('This is a copyable text.')">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ellipsis -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Ellipsis</h2>
+            <div class="space-y-4 bg-white p-6 rounded border">
+                <!-- Single Line Ellipsis -->
+                <div class="typography-ellipsis">
+                    <p class="text-base text-gray-900 truncate w-64">
+                        This is a very long text that should be truncated with ellipsis when it exceeds the container width.
+                    </p>
+                </div>
+                
+                <!-- Multiple Lines Ellipsis -->
+                <div class="typography-ellipsis-multiple">
+                    <p class="text-base text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.5; max-height: 3em;">
+                        This is a very long text that should be truncated with ellipsis after multiple lines. It demonstrates how text can be limited to a specific number of lines with an ellipsis at the end when the content exceeds the specified height.
+                    </p>
+                </div>
+                
+                <!-- Expandable Ellipsis -->
+                <div class="typography-ellipsis-expandable">
+                    <p class="text-base text-gray-900" id="expandableText">
+                        <span class="truncated-content overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.5; max-height: 3em;">
+                            This is an expandable text that can be expanded to show the full content. Click the expand button to see the complete text. This demonstrates the interactive ellipsis functionality commonly used in user interfaces.
+                        </span>
+                        <button class="text-primary-600 hover:text-primary-700 ml-1" onclick="expandText(this)">...expand</button>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Text Sizes -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Text Sizes</h2>
+            <div class="space-y-4 bg-white p-6 rounded border">
+                <p class="typography-text-xs text-xs text-gray-900">Extra Small Text (12px)</p>
+                <p class="typography-text-sm text-sm text-gray-900">Small Text (14px)</p>
+                <p class="typography-text-base text-base text-gray-900">Base Text (16px)</p>
+                <p class="typography-text-lg text-lg text-gray-900">Large Text (18px)</p>
+                <p class="typography-text-xl text-xl text-gray-900">Extra Large Text (20px)</p>
+                <p class="typography-text-2xl text-2xl text-gray-900">2X Large Text (24px)</p>
+            </div>
+        </section>
+
+        <!-- Paragraph -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Paragraph</h2>
+            <div class="space-y-4 bg-white p-6 rounded border">
+                <div class="typography-paragraph">
+                    <p class="text-base text-gray-900 leading-6 mb-4">
+                        Ant Design is a design language for background applications, is refined by Ant UED Team. 
+                        Ant Design, a design language for background applications, is refined by Ant UED Team.
+                    </p>
+                    <p class="text-base text-gray-900 leading-6">
+                        This is another paragraph that demonstrates the spacing and typography settings for paragraphs in the Ant Design system. The paragraphs maintain consistent spacing and readability.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Links -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Links</h2>
+            <div class="space-y-4 bg-white p-6 rounded border">
+                <p class="text-base text-gray-900">
+                    <a href="#" class="typography-link text-primary-600 hover:text-primary-700 underline">Default Link</a>
+                </p>
+                <p class="text-base text-gray-900">
+                    <a href="#" class="typography-link typography-link--danger text-red-600 hover:text-red-700 underline">Danger Link</a>
+                </p>
+                <p class="text-base text-gray-900">
+                    <a href="#" class="typography-link typography-link--disabled text-gray-400 cursor-not-allowed">Disabled Link</a>
+                </p>
+                <p class="text-base text-gray-900">
+                    <a href="#" class="typography-link typography-link--external text-primary-600 hover:text-primary-700 underline inline-flex items-center">
+                        External Link
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </a>
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function editText(element) {
+            const currentText = element.textContent;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentText;
+            input.className = 'text-base text-gray-900 bg-white border border-gray-300 rounded px-2 py-1';
+            
+            input.addEventListener('blur', function() {
+                element.textContent = input.value;
+                element.style.display = 'inline';
+                input.remove();
+            });
+            
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    input.blur();
+                }
+            });
+            
+            element.style.display = 'none';
+            element.parentNode.insertBefore(input, element.nextSibling);
+            input.focus();
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                // You could show a toast notification here
+                console.log('Text copied to clipboard');
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+
+        function expandText(button) {
+            const paragraph = button.parentNode;
+            const truncatedContent = paragraph.querySelector('.truncated-content');
+            
+            if (button.textContent === '...expand') {
+                truncatedContent.style.display = 'block';
+                truncatedContent.style.webkitLineClamp = 'unset';
+                truncatedContent.style.maxHeight = 'none';
+                button.textContent = ' collapse';
+            } else {
+                truncatedContent.style.display = '-webkit-box';
+                truncatedContent.style.webkitLineClamp = '2';
+                truncatedContent.style.maxHeight = '3em';
+                button.textContent = '...expand';
+            }
+        }
+    </script>
+</body>
+</html>

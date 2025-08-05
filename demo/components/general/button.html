@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Components - Ant Design Demo</title>
+    <link rel="stylesheet" href="../../../dist/main.css">
+</head>
+<body class="bg-gray-50 p-6">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-primary-600">Button Components</h1>
+        
+        <!-- Basic Buttons -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Basic Buttons</h2>
+            <div class="flex flex-wrap gap-3">
+                <!-- Primary Button -->
+                <button class="btn btn--primary px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Primary
+                </button>
+                
+                <!-- Default Button -->
+                <button class="btn btn--default px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded hover:border-primary-500 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Default
+                </button>
+                
+                <!-- Dashed Button -->
+                <button class="btn btn--dashed px-4 py-2 bg-white text-gray-700 border border-dashed border-gray-300 rounded hover:border-primary-500 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Dashed
+                </button>
+                
+                <!-- Text Button -->
+                <button class="btn btn--text px-4 py-2 text-primary-600 hover:bg-primary-50 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Text
+                </button>
+                
+                <!-- Link Button -->
+                <button class="btn btn--link px-4 py-2 text-primary-600 hover:text-primary-700 underline focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Link
+                </button>
+            </div>
+        </section>
+
+        <!-- Button Sizes -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Button Sizes</h2>
+            <div class="flex flex-wrap items-center gap-3">
+                <!-- Large -->
+                <button class="btn btn--primary btn--large px-6 py-3 bg-primary-600 text-white rounded text-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Large
+                </button>
+                
+                <!-- Default -->
+                <button class="btn btn--primary px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Default
+                </button>
+                
+                <!-- Small -->
+                <button class="btn btn--primary btn--small px-3 py-1 bg-primary-600 text-white rounded text-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Small
+                </button>
+            </div>
+        </section>
+
+        <!-- Button States -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Button States</h2>
+            <div class="flex flex-wrap gap-3">
+                <!-- Normal -->
+                <button class="btn btn--primary px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Normal
+                </button>
+                
+                <!-- Loading -->
+                <button class="btn btn--primary btn--loading px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors flex items-center" disabled>
+                    <svg class="animate-spin h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Loading
+                </button>
+                
+                <!-- Disabled -->
+                <button class="btn btn--primary btn--disabled px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed" disabled>
+                    Disabled
+                </button>
+            </div>
+        </section>
+
+        <!-- Danger Buttons -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Danger Buttons</h2>
+            <div class="flex flex-wrap gap-3">
+                <button class="btn btn--danger px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">
+                    Danger Primary
+                </button>
+                
+                <button class="btn btn--danger-ghost px-4 py-2 bg-white text-red-600 border border-red-600 rounded hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">
+                    Danger Ghost
+                </button>
+                
+                <button class="btn btn--danger-text px-4 py-2 text-red-600 hover:bg-red-50 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">
+                    Danger Text
+                </button>
+            </div>
+        </section>
+
+        <!-- Icon Buttons -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Icon Buttons</h2>
+            <div class="flex flex-wrap gap-3">
+                <!-- With Left Icon -->
+                <button class="btn btn--primary px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Add Item
+                </button>
+                
+                <!-- Icon Only -->
+                <button class="btn btn--icon w-10 h-10 bg-primary-600 text-white rounded hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                </button>
+                
+                <!-- With Right Icon -->
+                <button class="btn btn--default px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded hover:border-primary-500 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors flex items-center">
+                    Download
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- Block Buttons -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Block Buttons</h2>
+            <div class="space-y-3">
+                <button class="btn btn--primary btn--block w-full px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Primary Block Button
+                </button>
+                
+                <button class="btn btn--default btn--block w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded hover:border-primary-500 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Default Block Button
+                </button>
+            </div>
+        </section>
+
+        <!-- Button Groups -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Button Groups</h2>
+            <div class="btn-group inline-flex" role="group">
+                <button class="btn btn--default px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-l hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Left
+                </button>
+                <button class="btn btn--default px-4 py-2 bg-white text-gray-700 border-t border-b border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Middle
+                </button>
+                <button class="btn btn--default px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-r hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                    Right
+                </button>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
