@@ -22,7 +22,6 @@
       "@styles/*": ["src/styles/*"],
       "@tokens/*": ["src/tokens/*"],
       "@components/*": ["src/components/*"],
-      "@icons/*": ["src/icons/*"],
       "@utils/*": ["src/utils/*"]
     }
   },

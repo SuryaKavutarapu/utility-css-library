@@ -1,53 +1,235 @@
 /**
  * Color Utilities
- * Text, background, and border color utilities with all color scales
+ * Enhanced color system with theme support, improved contrast, and CSS custom properties
+ * Supports multiple themes with light/dark mode variants
  */
 
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
-// Text color utilities
+// CSS Custom Properties for theming
+:root {
+  // Primary colors
+  --color-primary-50: #{map-get(map-get($colors, 'primary'), '50')};
+  --color-primary-100: #{map-get(map-get($colors, 'primary'), '100')};
+  --color-primary-200: #{map-get(map-get($colors, 'primary'), '200')};
+  --color-primary-300: #{map-get(map-get($colors, 'primary'), '300')};
+  --color-primary-400: #{map-get(map-get($colors, 'primary'), '400')};
+  --color-primary-500: #{map-get(map-get($colors, 'primary'), '500')};
+  --color-primary-600: #{map-get(map-get($colors, 'primary'), '600')};
+  --color-primary-700: #{map-get(map-get($colors, 'primary'), '700')};
+  --color-primary-800: #{map-get(map-get($colors, 'primary'), '800')};
+  --color-primary-900: #{map-get(map-get($colors, 'primary'), '900')};
+  --color-primary-950: #{map-get(map-get($colors, 'primary'), '950')};
+
+  // Surface colors
+  --color-surface-background: #{$surface-background};
+  --color-surface-foreground: #{$surface-foreground};
+  --color-surface-card: #{$surface-card};
+  --color-surface-popover: #{$surface-popover};
+  --color-surface-modal: #{$surface-modal};
+  --color-surface-hover: #{$surface-hover};
+  --color-surface-pressed: #{$surface-pressed};
+  --color-surface-focus: #{$surface-focus};
+  --color-surface-border: #{$surface-border};
+  --color-surface-divider: #{$surface-divider};
+
+  // Text colors with improved contrast
+  --color-text-primary: #{$text-primary};
+  --color-text-secondary: #{$text-secondary};
+  --color-text-tertiary: #{$text-tertiary};
+  --color-text-inverse: #{$text-inverse};
+  --color-text-disabled: #{$text-disabled};
+  --color-text-placeholder: #{$text-placeholder};
+  --color-text-link: #{$text-link};
+  --color-text-link-hover: #{$text-link-hover};
+}
+
+// Text color utilities using CSS custom properties
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-inverse { color: var(--color-text-inverse); }
+.text-disabled { color: var(--color-text-disabled); }
+.text-placeholder { color: var(--color-text-placeholder); }
+
+// High contrast text utilities
+.text-high-contrast { 
+  color: var(--color-surface-foreground);
+  font-weight: 600;
+}
+
+.text-high-contrast-inverse { 
+  color: var(--color-surface-background);
+  font-weight: 600;
+}
+
+// Link utilities with proper contrast
+.text-link { 
+  color: var(--color-text-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease-in-out, text-decoration-thickness 0.15s ease-in-out;
+}
+
+.text-link:hover { 
+  color: var(--color-text-link-hover);
+  text-decoration-thickness: 2px;
+}
+
+// Primary color scale utilities
+@for $i from 50 through 950 {
+  @if $i == 50 or $i == 100 or ($i >= 200 and $i <= 900 and $i % 100 == 0) or $i == 950 {
+    .text-primary-#{$i} {
+      color: var(--color-primary-#{$i});
+    }
+  }
+}
+
+// Background color utilities using CSS custom properties
+.bg-background { background-color: var(--color-surface-background); }
+.bg-foreground { background-color: var(--color-surface-foreground); }
+.bg-card { background-color: var(--color-surface-card); }
+.bg-popover { background-color: var(--color-surface-popover); }
+.bg-modal { background-color: var(--color-surface-modal); }
+.bg-hover { background-color: var(--color-surface-hover); }
+.bg-pressed { background-color: var(--color-surface-pressed); }
+
+// Primary background utilities
+@for $i from 50 through 950 {
+  @if $i == 50 or $i == 100 or ($i >= 200 and $i <= 900 and $i % 100 == 0) or $i == 950 {
+    .bg-primary-#{$i} {
+      background-color: var(--color-primary-#{$i});
+    }
+  }
+}
+
+// High contrast background utilities
+.bg-high-contrast {
+  background-color: var(--color-surface-foreground);
+  color: var(--color-surface-background);
+}
+
+.bg-high-contrast-inverse {
+  background-color: var(--color-surface-background);
+  color: var(--color-surface-foreground);
+}
+
+// Generate all color utilities from the color map
 @each $color-name, $color-scale in $colors {
   @if type-of($color-scale) == 'map' {
     @each $shade, $value in $color-scale {
       .text-#{$color-name}-#{$shade} {
         color: #{$value};
       }
+      .bg-#{$color-name}-#{$shade} {
+        background-color: #{$value};
+      }
+      .border-#{$color-name}-#{$shade} {
+        border-color: #{$value};
+      }
     }
   } @else {
     .text-#{$color-name} {
       color: #{$color-scale};
     }
-  }
-}
-
-// Surface and text semantic colors
-.text-primary { color: $text-primary; }
-.text-secondary { color: $text-secondary; }
-.text-tertiary { color: $text-tertiary; }
-.text-inverse { color: $text-inverse; }
-.text-disabled { color: $text-disabled; }
-.text-placeholder { color: $text-placeholder; }
-.text-link { color: $text-link; }
-.text-link-hover { color: $text-link-hover; }
-
-// Background color utilities
-@each $color-name, $color-scale in $colors {
-  @if type-of($color-scale) == 'map' {
-    @each $shade, $value in $color-scale {
-      .bg-#{$color-name}-#{$shade} {
-        background-color: #{$value};
-      }
-    }
-  } @else {
     .bg-#{$color-name} {
       background-color: #{$color-scale};
     }
+    .border-#{$color-name} {
+      border-color: #{$color-scale};
+    }
   }
 }
 
-// Surface semantic colors
-.bg-background { background-color: $surface-background; }
+// Border color utilities using CSS custom properties
+.border-default { border-color: var(--color-surface-border); }
+.border-focus { border-color: var(--color-surface-focus); }
+.border-divider { border-color: var(--color-surface-divider); }
+
+// Opacity utilities for better color control
+@for $i from 0 through 100 {
+  @if $i % 5 == 0 {
+    .text-opacity-#{$i} { 
+      --tw-text-opacity: #{$i / 100}; 
+      color: rgb(from var(--color-text-primary) r g b / var(--tw-text-opacity));
+    }
+    .bg-opacity-#{$i} { 
+      --tw-bg-opacity: #{$i / 100}; 
+      background-color: rgb(from var(--color-surface-background) r g b / var(--tw-bg-opacity));
+    }
+    .border-opacity-#{$i} { 
+      --tw-border-opacity: #{$i / 100}; 
+      border-color: rgb(from var(--color-surface-border) r g b / var(--tw-border-opacity));
+    }
+  }
+}
+
+// Accessible button color combinations
+.btn-accessible-primary {
+  background-color: var(--color-primary-600);
+  color: white;
+  border: 2px solid var(--color-primary-600);
+  
+  &:hover {
+    background-color: var(--color-primary-700);
+    border-color: var(--color-primary-700);
+  }
+  
+  &:focus {
+    outline: 3px solid var(--color-primary-200);
+    outline-offset: 2px;
+  }
+  
+  &:disabled {
+    background-color: var(--color-text-disabled);
+    border-color: var(--color-text-disabled);
+    color: white;
+    cursor: not-allowed;
+  }
+}
+
+.btn-accessible-secondary {
+  background-color: transparent;
+  color: var(--color-primary-700);
+  border: 2px solid var(--color-primary-600);
+  
+  &:hover {
+    background-color: var(--color-primary-50);
+    border-color: var(--color-primary-700);
+  }
+  
+  &:focus {
+    outline: 3px solid var(--color-primary-200);
+    outline-offset: 2px;
+  }
+  
+  &:disabled {
+    color: var(--color-text-disabled);
+    border-color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+}
+
+// Responsive color utilities
+@include responsive-utilities {
+  @each $color-name, $color-scale in $colors {
+    @if type-of($color-scale) == 'map' {
+      @each $shade, $value in $color-scale {
+        .text-#{$color-name}-#{$shade} {
+          color: #{$value};
+        }
+        .bg-#{$color-name}-#{$shade} {
+          background-color: #{$value};
+        }
+        .border-#{$color-name}-#{$shade} {
+          border-color: #{$value};
+        }
+      }
+    }
+  }
+}
 .bg-foreground { background-color: $surface-foreground; }
 .bg-card { background-color: $surface-card; }
 .bg-popover { background-color: $surface-popover; }
