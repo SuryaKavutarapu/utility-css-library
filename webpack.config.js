@@ -7,8 +7,7 @@ module.exports = (env, argv) => {
 
   return {
     entry: {
-      main: './src/index.ts',
-      styles: './src/styles/main.scss',
+      main: ['./src/index.ts', './src/styles/main.scss'],
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -110,7 +109,7 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: './public/index.html',
         filename: 'index.html',
-        inject: true,
+        inject: 'head',
         minify: isProduction,
       }),
     ],

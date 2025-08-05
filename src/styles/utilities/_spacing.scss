@@ -9,71 +9,71 @@
 // Margin utilities
 @each $key, $value in $spacing {
   // All sides
-  .m-#{$key} { margin: #{$value} !important; }
+  .m-#{$key} { margin: #{$value}; }
   
   // Horizontal
   .mx-#{$key} { 
-    margin-left: #{$value} !important;
-    margin-right: #{$value} !important;
+    margin-left: #{$value};
+    margin-right: #{$value};
   }
   
   // Vertical
   .my-#{$key} {
-    margin-top: #{$value} !important;
-    margin-bottom: #{$value} !important;
+    margin-top: #{$value};
+    margin-bottom: #{$value};
   }
   
   // Individual sides
-  .mt-#{$key} { margin-top: #{$value} !important; }
-  .mr-#{$key} { margin-right: #{$value} !important; }
-  .mb-#{$key} { margin-bottom: #{$value} !important; }
-  .ml-#{$key} { margin-left: #{$value} !important; }
+  .mt-#{$key} { margin-top: #{$value}; }
+  .mr-#{$key} { margin-right: #{$value}; }
+  .mb-#{$key} { margin-bottom: #{$value}; }
+  .ml-#{$key} { margin-left: #{$value}; }
   
   // Start/End (for RTL support)
-  .ms-#{$key} { margin-inline-start: #{$value} !important; }
-  .me-#{$key} { margin-inline-end: #{$value} !important; }
+  .ms-#{$key} { margin-inline-start: #{$value}; }
+  .me-#{$key} { margin-inline-end: #{$value}; }
 }
 
 // Padding utilities
 @each $key, $value in $spacing {
   // All sides
-  .p-#{$key} { padding: #{$value} !important; }
+  .p-#{$key} { padding: #{$value}; }
   
   // Horizontal
   .px-#{$key} { 
-    padding-left: #{$value} !important;
-    padding-right: #{$value} !important;
+    padding-left: #{$value};
+    padding-right: #{$value};
   }
   
   // Vertical
   .py-#{$key} {
-    padding-top: #{$value} !important;
-    padding-bottom: #{$value} !important;
+    padding-top: #{$value};
+    padding-bottom: #{$value};
   }
   
   // Individual sides
-  .pt-#{$key} { padding-top: #{$value} !important; }
-  .pr-#{$key} { padding-right: #{$value} !important; }
-  .pb-#{$key} { padding-bottom: #{$value} !important; }
-  .pl-#{$key} { padding-left: #{$value} !important; }
+  .pt-#{$key} { padding-top: #{$value}; }
+  .pr-#{$key} { padding-right: #{$value}; }
+  .pb-#{$key} { padding-bottom: #{$value}; }
+  .pl-#{$key} { padding-left: #{$value}; }
   
   // Start/End (for RTL support)
-  .ps-#{$key} { padding-inline-start: #{$value} !important; }
-  .pe-#{$key} { padding-inline-end: #{$value} !important; }
+  .ps-#{$key} { padding-inline-start: #{$value}; }
+  .pe-#{$key} { padding-inline-end: #{$value}; }
 }
 
 // Space between utilities
 @each $key, $value in $spacing {
   .space-x-#{$key} > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 0;
-    margin-right: calc(#{$value} * var(--tw-space-x-reverse)) !important;
-    margin-left: calc(#{$value} * calc(1 - var(--tw-space-x-reverse))) !important;
+    margin-right: calc(#{$value} * var(--tw-space-x-reverse));
+    margin-left: calc(#{$value} * calc(1 - var(--tw-space-x-reverse)));
   }
   
   .space-y-#{$key} > :not([hidden]) ~ :not([hidden]) {
     --tw-space-y-reverse: 0;
-    margin-top: calc(#{$value} * calc(1 - var(--tw-space-y-reverse))) !important;
-    margin-bottom: calc(#{$value} * var(--tw-space-y-reverse)) !important;
+    margin-top: calc(#{$value} * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(#{$value} * var(--tw-space-y-reverse));
   }
 }
 
@@ -87,87 +87,87 @@
 }
 
 // Auto margins
-.m-auto { margin: auto !important; }
+.m-auto { margin: auto; }
 .mx-auto { 
-  margin-left: auto !important;
-  margin-right: auto !important;
+  margin-left: auto;
+  margin-right: auto;
 }
 .my-auto {
-  margin-top: auto !important;
-  margin-bottom: auto !important;
+  margin-top: auto;
+  margin-bottom: auto;
 }
-.mt-auto { margin-top: auto !important; }
-.mr-auto { margin-right: auto !important; }
-.mb-auto { margin-bottom: auto !important; }
-.ml-auto { margin-left: auto !important; }
-.ms-auto { margin-inline-start: auto !important; }
-.me-auto { margin-inline-end: auto !important; }
+.mt-auto { margin-top: auto; }
+.mr-auto { margin-right: auto; }
+.mb-auto { margin-bottom: auto; }
+.ml-auto { margin-left: auto; }
+.ms-auto { margin-inline-start: auto; }
+.me-auto { margin-inline-end: auto; }
 
 // Responsive variants
 @include responsive-utilities {
   @each $key, $value in $spacing {
     // Margin utilities
-    .m-#{$key} { margin: #{$value} !important; }
+    .m-#{$key} { margin: #{$value}; }
     .mx-#{$key} { 
-      margin-left: #{$value} !important;
-      margin-right: #{$value} !important;
+      margin-left: #{$value};
+      margin-right: #{$value};
     }
     .my-#{$key} {
-      margin-top: #{$value} !important;
-      margin-bottom: #{$value} !important;
+      margin-top: #{$value};
+      margin-bottom: #{$value};
     }
-    .mt-#{$key} { margin-top: #{$value} !important; }
-    .mr-#{$key} { margin-right: #{$value} !important; }
-    .mb-#{$key} { margin-bottom: #{$value} !important; }
-    .ml-#{$key} { margin-left: #{$value} !important; }
-    .ms-#{$key} { margin-inline-start: #{$value} !important; }
-    .me-#{$key} { margin-inline-end: #{$value} !important; }
+    .mt-#{$key} { margin-top: #{$value}; }
+    .mr-#{$key} { margin-right: #{$value}; }
+    .mb-#{$key} { margin-bottom: #{$value}; }
+    .ml-#{$key} { margin-left: #{$value}; }
+    .ms-#{$key} { margin-inline-start: #{$value}; }
+    .me-#{$key} { margin-inline-end: #{$value}; }
     
     // Padding utilities
-    .p-#{$key} { padding: #{$value} !important; }
+    .p-#{$key} { padding: #{$value}; }
     .px-#{$key} { 
-      padding-left: #{$value} !important;
-      padding-right: #{$value} !important;
+      padding-left: #{$value};
+      padding-right: #{$value};
     }
     .py-#{$key} {
-      padding-top: #{$value} !important;
-      padding-bottom: #{$value} !important;
+      padding-top: #{$value};
+      padding-bottom: #{$value};
     }
-    .pt-#{$key} { padding-top: #{$value} !important; }
-    .pr-#{$key} { padding-right: #{$value} !important; }
-    .pb-#{$key} { padding-bottom: #{$value} !important; }
-    .pl-#{$key} { padding-left: #{$value} !important; }
-    .ps-#{$key} { padding-inline-start: #{$value} !important; }
-    .pe-#{$key} { padding-inline-end: #{$value} !important; }
+    .pt-#{$key} { padding-top: #{$value}; }
+    .pr-#{$key} { padding-right: #{$value}; }
+    .pb-#{$key} { padding-bottom: #{$value}; }
+    .pl-#{$key} { padding-left: #{$value}; }
+    .ps-#{$key} { padding-inline-start: #{$value}; }
+    .pe-#{$key} { padding-inline-end: #{$value}; }
     
     // Space between utilities
     .space-x-#{$key} > :not([hidden]) ~ :not([hidden]) {
       --tw-space-x-reverse: 0;
-      margin-right: calc(#{$value} * var(--tw-space-x-reverse)) !important;
-      margin-left: calc(#{$value} * calc(1 - var(--tw-space-x-reverse))) !important;
+      margin-right: calc(#{$value} * var(--tw-space-x-reverse));
+      margin-left: calc(#{$value} * calc(1 - var(--tw-space-x-reverse)));
     }
     
     .space-y-#{$key} > :not([hidden]) ~ :not([hidden]) {
       --tw-space-y-reverse: 0;
-      margin-top: calc(#{$value} * calc(1 - var(--tw-space-y-reverse))) !important;
-      margin-bottom: calc(#{$value} * var(--tw-space-y-reverse)) !important;
+      margin-top: calc(#{$value} * calc(1 - var(--tw-space-y-reverse)));
+      margin-bottom: calc(#{$value} * var(--tw-space-y-reverse));
     }
   }
   
   // Auto margins
-  .m-auto { margin: auto !important; }
+  .m-auto { margin: auto; }
   .mx-auto { 
-    margin-left: auto !important;
-    margin-right: auto !important;
+    margin-left: auto;
+    margin-right: auto;
   }
   .my-auto {
-    margin-top: auto !important;
-    margin-bottom: auto !important;
+    margin-top: auto;
+    margin-bottom: auto;
   }
-  .mt-auto { margin-top: auto !important; }
-  .mr-auto { margin-right: auto !important; }
-  .mb-auto { margin-bottom: auto !important; }
-  .ml-auto { margin-left: auto !important; }
-  .ms-auto { margin-inline-start: auto !important; }
-  .me-auto { margin-inline-end: auto !important; }
+  .mt-auto { margin-top: auto; }
+  .mr-auto { margin-right: auto; }
+  .mb-auto { margin-bottom: auto; }
+  .ml-auto { margin-left: auto; }
+  .ms-auto { margin-inline-start: auto; }
+  .me-auto { margin-inline-end: auto; }
 }

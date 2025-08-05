@@ -8,7 +8,7 @@
 @use 'abstracts/mixins';
 @use 'base';
 
-// Utility framework
+// Utility framework (loaded last for highest specificity)
 @use 'utilities';
 
 // Export everything for module usage
