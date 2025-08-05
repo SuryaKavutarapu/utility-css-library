@@ -1,0 +1,18 @@
+/**
+ * Configurable Design System for Organizations
+ * Main SCSS entry point
+ */
+
+// Foundation layers
+@use 'abstracts/variables';
+@use 'abstracts/mixins';
+@use 'base';
+
+// Utility framework
+@use 'utilities';
+
+// Export everything for module usage
+@forward 'abstracts/variables';
+@forward 'abstracts/mixins';
+@forward 'base';
+@forward 'utilities';

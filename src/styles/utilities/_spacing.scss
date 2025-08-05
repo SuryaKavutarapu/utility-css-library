@@ -1,0 +1,173 @@
+/**
+ * Spacing Utilities
+ * Margin and padding utilities with all directions and responsive variants
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// Margin utilities
+@each $key, $value in $spacing {
+  // All sides
+  .m-#{$key} { margin: #{$value} !important; }
+  
+  // Horizontal
+  .mx-#{$key} { 
+    margin-left: #{$value} !important;
+    margin-right: #{$value} !important;
+  }
+  
+  // Vertical
+  .my-#{$key} {
+    margin-top: #{$value} !important;
+    margin-bottom: #{$value} !important;
+  }
+  
+  // Individual sides
+  .mt-#{$key} { margin-top: #{$value} !important; }
+  .mr-#{$key} { margin-right: #{$value} !important; }
+  .mb-#{$key} { margin-bottom: #{$value} !important; }
+  .ml-#{$key} { margin-left: #{$value} !important; }
+  
+  // Start/End (for RTL support)
+  .ms-#{$key} { margin-inline-start: #{$value} !important; }
+  .me-#{$key} { margin-inline-end: #{$value} !important; }
+}
+
+// Padding utilities
+@each $key, $value in $spacing {
+  // All sides
+  .p-#{$key} { padding: #{$value} !important; }
+  
+  // Horizontal
+  .px-#{$key} { 
+    padding-left: #{$value} !important;
+    padding-right: #{$value} !important;
+  }
+  
+  // Vertical
+  .py-#{$key} {
+    padding-top: #{$value} !important;
+    padding-bottom: #{$value} !important;
+  }
+  
+  // Individual sides
+  .pt-#{$key} { padding-top: #{$value} !important; }
+  .pr-#{$key} { padding-right: #{$value} !important; }
+  .pb-#{$key} { padding-bottom: #{$value} !important; }
+  .pl-#{$key} { padding-left: #{$value} !important; }
+  
+  // Start/End (for RTL support)
+  .ps-#{$key} { padding-inline-start: #{$value} !important; }
+  .pe-#{$key} { padding-inline-end: #{$value} !important; }
+}
+
+// Space between utilities
+@each $key, $value in $spacing {
+  .space-x-#{$key} > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(#{$value} * var(--tw-space-x-reverse)) !important;
+    margin-left: calc(#{$value} * calc(1 - var(--tw-space-x-reverse))) !important;
+  }
+  
+  .space-y-#{$key} > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(#{$value} * calc(1 - var(--tw-space-y-reverse))) !important;
+    margin-bottom: calc(#{$value} * var(--tw-space-y-reverse)) !important;
+  }
+}
+
+// Space reverse utilities
+.space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+.space-y-reverse > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 1;
+}
+
+// Auto margins
+.m-auto { margin: auto !important; }
+.mx-auto { 
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.my-auto {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+.mt-auto { margin-top: auto !important; }
+.mr-auto { margin-right: auto !important; }
+.mb-auto { margin-bottom: auto !important; }
+.ml-auto { margin-left: auto !important; }
+.ms-auto { margin-inline-start: auto !important; }
+.me-auto { margin-inline-end: auto !important; }
+
+// Responsive variants
+@include responsive-utilities {
+  @each $key, $value in $spacing {
+    // Margin utilities
+    .m-#{$key} { margin: #{$value} !important; }
+    .mx-#{$key} { 
+      margin-left: #{$value} !important;
+      margin-right: #{$value} !important;
+    }
+    .my-#{$key} {
+      margin-top: #{$value} !important;
+      margin-bottom: #{$value} !important;
+    }
+    .mt-#{$key} { margin-top: #{$value} !important; }
+    .mr-#{$key} { margin-right: #{$value} !important; }
+    .mb-#{$key} { margin-bottom: #{$value} !important; }
+    .ml-#{$key} { margin-left: #{$value} !important; }
+    .ms-#{$key} { margin-inline-start: #{$value} !important; }
+    .me-#{$key} { margin-inline-end: #{$value} !important; }
+    
+    // Padding utilities
+    .p-#{$key} { padding: #{$value} !important; }
+    .px-#{$key} { 
+      padding-left: #{$value} !important;
+      padding-right: #{$value} !important;
+    }
+    .py-#{$key} {
+      padding-top: #{$value} !important;
+      padding-bottom: #{$value} !important;
+    }
+    .pt-#{$key} { padding-top: #{$value} !important; }
+    .pr-#{$key} { padding-right: #{$value} !important; }
+    .pb-#{$key} { padding-bottom: #{$value} !important; }
+    .pl-#{$key} { padding-left: #{$value} !important; }
+    .ps-#{$key} { padding-inline-start: #{$value} !important; }
+    .pe-#{$key} { padding-inline-end: #{$value} !important; }
+    
+    // Space between utilities
+    .space-x-#{$key} > :not([hidden]) ~ :not([hidden]) {
+      --tw-space-x-reverse: 0;
+      margin-right: calc(#{$value} * var(--tw-space-x-reverse)) !important;
+      margin-left: calc(#{$value} * calc(1 - var(--tw-space-x-reverse))) !important;
+    }
+    
+    .space-y-#{$key} > :not([hidden]) ~ :not([hidden]) {
+      --tw-space-y-reverse: 0;
+      margin-top: calc(#{$value} * calc(1 - var(--tw-space-y-reverse))) !important;
+      margin-bottom: calc(#{$value} * var(--tw-space-y-reverse)) !important;
+    }
+  }
+  
+  // Auto margins
+  .m-auto { margin: auto !important; }
+  .mx-auto { 
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .my-auto {
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+  }
+  .mt-auto { margin-top: auto !important; }
+  .mr-auto { margin-right: auto !important; }
+  .mb-auto { margin-bottom: auto !important; }
+  .ml-auto { margin-left: auto !important; }
+  .ms-auto { margin-inline-start: auto !important; }
+  .me-auto { margin-inline-end: auto !important; }
+}

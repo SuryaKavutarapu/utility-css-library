@@ -1,0 +1,342 @@
+/**
+ * Flexbox & Grid Utilities
+ * Complete flexbox and CSS grid utilities for modern layouts
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// =================
+// FLEXBOX UTILITIES
+// =================
+
+// Flex direction
+.flex-row { flex-direction: row !important; }
+.flex-row-reverse { flex-direction: row-reverse !important; }
+.flex-col { flex-direction: column !important; }
+.flex-col-reverse { flex-direction: column-reverse !important; }
+
+// Flex wrap
+.flex-wrap { flex-wrap: wrap !important; }
+.flex-wrap-reverse { flex-wrap: wrap-reverse !important; }
+.flex-nowrap { flex-wrap: nowrap !important; }
+
+// Flex
+.flex-1 { flex: 1 1 0% !important; }
+.flex-auto { flex: 1 1 auto !important; }
+.flex-initial { flex: 0 1 auto !important; }
+.flex-none { flex: none !important; }
+
+// Flex grow
+.grow { flex-grow: 1 !important; }
+.grow-0 { flex-grow: 0 !important; }
+
+// Flex shrink
+.shrink { flex-shrink: 1 !important; }
+.shrink-0 { flex-shrink: 0 !important; }
+
+// Flex basis
+.basis-0 { flex-basis: 0px !important; }
+.basis-1 { flex-basis: 0.25rem !important; }
+.basis-2 { flex-basis: 0.5rem !important; }
+.basis-3 { flex-basis: 0.75rem !important; }
+.basis-4 { flex-basis: 1rem !important; }
+.basis-5 { flex-basis: 1.25rem !important; }
+.basis-6 { flex-basis: 1.5rem !important; }
+.basis-7 { flex-basis: 1.75rem !important; }
+.basis-8 { flex-basis: 2rem !important; }
+.basis-9 { flex-basis: 2.25rem !important; }
+.basis-10 { flex-basis: 2.5rem !important; }
+.basis-11 { flex-basis: 2.75rem !important; }
+.basis-12 { flex-basis: 3rem !important; }
+.basis-14 { flex-basis: 3.5rem !important; }
+.basis-16 { flex-basis: 4rem !important; }
+.basis-20 { flex-basis: 5rem !important; }
+.basis-24 { flex-basis: 6rem !important; }
+.basis-28 { flex-basis: 7rem !important; }
+.basis-32 { flex-basis: 8rem !important; }
+.basis-36 { flex-basis: 9rem !important; }
+.basis-40 { flex-basis: 10rem !important; }
+.basis-44 { flex-basis: 11rem !important; }
+.basis-48 { flex-basis: 12rem !important; }
+.basis-52 { flex-basis: 13rem !important; }
+.basis-56 { flex-basis: 14rem !important; }
+.basis-60 { flex-basis: 15rem !important; }
+.basis-64 { flex-basis: 16rem !important; }
+.basis-72 { flex-basis: 18rem !important; }
+.basis-80 { flex-basis: 20rem !important; }
+.basis-96 { flex-basis: 24rem !important; }
+.basis-auto { flex-basis: auto !important; }
+.basis-px { flex-basis: 1px !important; }
+.basis-0\.5 { flex-basis: 0.125rem !important; }
+.basis-1\.5 { flex-basis: 0.375rem !important; }
+.basis-2\.5 { flex-basis: 0.625rem !important; }
+.basis-3\.5 { flex-basis: 0.875rem !important; }
+.basis-1\/2 { flex-basis: 50% !important; }
+.basis-1\/3 { flex-basis: 33.333333% !important; }
+.basis-2\/3 { flex-basis: 66.666667% !important; }
+.basis-1\/4 { flex-basis: 25% !important; }
+.basis-2\/4 { flex-basis: 50% !important; }
+.basis-3\/4 { flex-basis: 75% !important; }
+.basis-1\/5 { flex-basis: 20% !important; }
+.basis-2\/5 { flex-basis: 40% !important; }
+.basis-3\/5 { flex-basis: 60% !important; }
+.basis-4\/5 { flex-basis: 80% !important; }
+.basis-1\/6 { flex-basis: 16.666667% !important; }
+.basis-2\/6 { flex-basis: 33.333333% !important; }
+.basis-3\/6 { flex-basis: 50% !important; }
+.basis-4\/6 { flex-basis: 66.666667% !important; }
+.basis-5\/6 { flex-basis: 83.333333% !important; }
+.basis-1\/12 { flex-basis: 8.333333% !important; }
+.basis-2\/12 { flex-basis: 16.666667% !important; }
+.basis-3\/12 { flex-basis: 25% !important; }
+.basis-4\/12 { flex-basis: 33.333333% !important; }
+.basis-5\/12 { flex-basis: 41.666667% !important; }
+.basis-6\/12 { flex-basis: 50% !important; }
+.basis-7\/12 { flex-basis: 58.333333% !important; }
+.basis-8\/12 { flex-basis: 66.666667% !important; }
+.basis-9\/12 { flex-basis: 75% !important; }
+.basis-10\/12 { flex-basis: 83.333333% !important; }
+.basis-11\/12 { flex-basis: 91.666667% !important; }
+.basis-full { flex-basis: 100% !important; }
+
+// Justify content
+.justify-normal { justify-content: normal !important; }
+.justify-start { justify-content: flex-start !important; }
+.justify-end { justify-content: flex-end !important; }
+.justify-center { justify-content: center !important; }
+.justify-between { justify-content: space-between !important; }
+.justify-around { justify-content: space-around !important; }
+.justify-evenly { justify-content: space-evenly !important; }
+.justify-stretch { justify-content: stretch !important; }
+
+// Justify items
+.justify-items-start { justify-items: start !important; }
+.justify-items-end { justify-items: end !important; }
+.justify-items-center { justify-items: center !important; }
+.justify-items-stretch { justify-items: stretch !important; }
+
+// Justify self
+.justify-self-auto { justify-self: auto !important; }
+.justify-self-start { justify-self: start !important; }
+.justify-self-end { justify-self: end !important; }
+.justify-self-center { justify-self: center !important; }
+.justify-self-stretch { justify-self: stretch !important; }
+
+// Align content
+.content-normal { align-content: normal !important; }
+.content-center { align-content: center !important; }
+.content-start { align-content: flex-start !important; }
+.content-end { align-content: flex-end !important; }
+.content-between { align-content: space-between !important; }
+.content-around { align-content: space-around !important; }
+.content-evenly { align-content: space-evenly !important; }
+.content-baseline { align-content: baseline !important; }
+.content-stretch { align-content: stretch !important; }
+
+// Align items
+.items-start { align-items: flex-start !important; }
+.items-end { align-items: flex-end !important; }
+.items-center { align-items: center !important; }
+.items-baseline { align-items: baseline !important; }
+.items-stretch { align-items: stretch !important; }
+
+// Align self
+.self-auto { align-self: auto !important; }
+.self-start { align-self: flex-start !important; }
+.self-end { align-self: flex-end !important; }
+.self-center { align-self: center !important; }
+.self-stretch { align-self: stretch !important; }
+.self-baseline { align-self: baseline !important; }
+
+// Place content
+.place-content-center { place-content: center !important; }
+.place-content-start { place-content: start !important; }
+.place-content-end { place-content: end !important; }
+.place-content-between { place-content: space-between !important; }
+.place-content-around { place-content: space-around !important; }
+.place-content-evenly { place-content: space-evenly !important; }
+.place-content-baseline { place-content: baseline !important; }
+.place-content-stretch { place-content: stretch !important; }
+
+// Place items
+.place-items-start { place-items: start !important; }
+.place-items-end { place-items: end !important; }
+.place-items-center { place-items: center !important; }
+.place-items-baseline { place-items: baseline !important; }
+.place-items-stretch { place-items: stretch !important; }
+
+// Place self
+.place-self-auto { place-self: auto !important; }
+.place-self-start { place-self: start !important; }
+.place-self-end { place-self: end !important; }
+.place-self-center { place-self: center !important; }
+.place-self-stretch { place-self: stretch !important; }
+
+// =================
+// GRID UTILITIES
+// =================
+
+// Grid template columns
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)) !important; }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+.grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
+.grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
+.grid-cols-7 { grid-template-columns: repeat(7, minmax(0, 1fr)) !important; }
+.grid-cols-8 { grid-template-columns: repeat(8, minmax(0, 1fr)) !important; }
+.grid-cols-9 { grid-template-columns: repeat(9, minmax(0, 1fr)) !important; }
+.grid-cols-10 { grid-template-columns: repeat(10, minmax(0, 1fr)) !important; }
+.grid-cols-11 { grid-template-columns: repeat(11, minmax(0, 1fr)) !important; }
+.grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)) !important; }
+.grid-cols-none { grid-template-columns: none !important; }
+.grid-cols-subgrid { grid-template-columns: subgrid !important; }
+
+// Grid column span
+.col-auto { grid-column: auto !important; }
+.col-span-1 { grid-column: span 1 / span 1 !important; }
+.col-span-2 { grid-column: span 2 / span 2 !important; }
+.col-span-3 { grid-column: span 3 / span 3 !important; }
+.col-span-4 { grid-column: span 4 / span 4 !important; }
+.col-span-5 { grid-column: span 5 / span 5 !important; }
+.col-span-6 { grid-column: span 6 / span 6 !important; }
+.col-span-7 { grid-column: span 7 / span 7 !important; }
+.col-span-8 { grid-column: span 8 / span 8 !important; }
+.col-span-9 { grid-column: span 9 / span 9 !important; }
+.col-span-10 { grid-column: span 10 / span 10 !important; }
+.col-span-11 { grid-column: span 11 / span 11 !important; }
+.col-span-12 { grid-column: span 12 / span 12 !important; }
+.col-span-full { grid-column: 1 / -1 !important; }
+
+// Grid column start/end
+.col-start-1 { grid-column-start: 1 !important; }
+.col-start-2 { grid-column-start: 2 !important; }
+.col-start-3 { grid-column-start: 3 !important; }
+.col-start-4 { grid-column-start: 4 !important; }
+.col-start-5 { grid-column-start: 5 !important; }
+.col-start-6 { grid-column-start: 6 !important; }
+.col-start-7 { grid-column-start: 7 !important; }
+.col-start-8 { grid-column-start: 8 !important; }
+.col-start-9 { grid-column-start: 9 !important; }
+.col-start-10 { grid-column-start: 10 !important; }
+.col-start-11 { grid-column-start: 11 !important; }
+.col-start-12 { grid-column-start: 12 !important; }
+.col-start-13 { grid-column-start: 13 !important; }
+.col-start-auto { grid-column-start: auto !important; }
+
+.col-end-1 { grid-column-end: 1 !important; }
+.col-end-2 { grid-column-end: 2 !important; }
+.col-end-3 { grid-column-end: 3 !important; }
+.col-end-4 { grid-column-end: 4 !important; }
+.col-end-5 { grid-column-end: 5 !important; }
+.col-end-6 { grid-column-end: 6 !important; }
+.col-end-7 { grid-column-end: 7 !important; }
+.col-end-8 { grid-column-end: 8 !important; }
+.col-end-9 { grid-column-end: 9 !important; }
+.col-end-10 { grid-column-end: 10 !important; }
+.col-end-11 { grid-column-end: 11 !important; }
+.col-end-12 { grid-column-end: 12 !important; }
+.col-end-13 { grid-column-end: 13 !important; }
+.col-end-auto { grid-column-end: auto !important; }
+
+// Grid template rows
+.grid-rows-1 { grid-template-rows: repeat(1, minmax(0, 1fr)) !important; }
+.grid-rows-2 { grid-template-rows: repeat(2, minmax(0, 1fr)) !important; }
+.grid-rows-3 { grid-template-rows: repeat(3, minmax(0, 1fr)) !important; }
+.grid-rows-4 { grid-template-rows: repeat(4, minmax(0, 1fr)) !important; }
+.grid-rows-5 { grid-template-rows: repeat(5, minmax(0, 1fr)) !important; }
+.grid-rows-6 { grid-template-rows: repeat(6, minmax(0, 1fr)) !important; }
+.grid-rows-none { grid-template-rows: none !important; }
+.grid-rows-subgrid { grid-template-rows: subgrid !important; }
+
+// Grid row span
+.row-auto { grid-row: auto !important; }
+.row-span-1 { grid-row: span 1 / span 1 !important; }
+.row-span-2 { grid-row: span 2 / span 2 !important; }
+.row-span-3 { grid-row: span 3 / span 3 !important; }
+.row-span-4 { grid-row: span 4 / span 4 !important; }
+.row-span-5 { grid-row: span 5 / span 5 !important; }
+.row-span-6 { grid-row: span 6 / span 6 !important; }
+.row-span-full { grid-row: 1 / -1 !important; }
+
+// Grid row start/end
+.row-start-1 { grid-row-start: 1 !important; }
+.row-start-2 { grid-row-start: 2 !important; }
+.row-start-3 { grid-row-start: 3 !important; }
+.row-start-4 { grid-row-start: 4 !important; }
+.row-start-5 { grid-row-start: 5 !important; }
+.row-start-6 { grid-row-start: 6 !important; }
+.row-start-7 { grid-row-start: 7 !important; }
+.row-start-auto { grid-row-start: auto !important; }
+
+.row-end-1 { grid-row-end: 1 !important; }
+.row-end-2 { grid-row-end: 2 !important; }
+.row-end-3 { grid-row-end: 3 !important; }
+.row-end-4 { grid-row-end: 4 !important; }
+.row-end-5 { grid-row-end: 5 !important; }
+.row-end-6 { grid-row-end: 6 !important; }
+.row-end-7 { grid-row-end: 7 !important; }
+.row-end-auto { grid-row-end: auto !important; }
+
+// Grid auto flow
+.grid-flow-row { grid-auto-flow: row !important; }
+.grid-flow-col { grid-auto-flow: column !important; }
+.grid-flow-dense { grid-auto-flow: dense !important; }
+.grid-flow-row-dense { grid-auto-flow: row dense !important; }
+.grid-flow-col-dense { grid-auto-flow: column dense !important; }
+
+// Grid auto columns
+.auto-cols-auto { grid-auto-columns: auto !important; }
+.auto-cols-min { grid-auto-columns: min-content !important; }
+.auto-cols-max { grid-auto-columns: max-content !important; }
+.auto-cols-fr { grid-auto-columns: minmax(0, 1fr) !important; }
+
+// Grid auto rows
+.auto-rows-auto { grid-auto-rows: auto !important; }
+.auto-rows-min { grid-auto-rows: min-content !important; }
+.auto-rows-max { grid-auto-rows: max-content !important; }
+.auto-rows-fr { grid-auto-rows: minmax(0, 1fr) !important; }
+
+// Gap
+@each $key, $value in $spacing {
+  .gap-#{$key} { gap: #{$value} !important; }
+  .gap-x-#{$key} { column-gap: #{$value} !important; }
+  .gap-y-#{$key} { row-gap: #{$value} !important; }
+}
+
+// Responsive variants
+@include responsive-utilities {
+  // Flexbox
+  .flex { display: flex !important; }
+  .inline-flex { display: inline-flex !important; }
+  .flex-row { flex-direction: row !important; }
+  .flex-row-reverse { flex-direction: row-reverse !important; }
+  .flex-col { flex-direction: column !important; }
+  .flex-col-reverse { flex-direction: column-reverse !important; }
+  .flex-wrap { flex-wrap: wrap !important; }
+  .flex-wrap-reverse { flex-wrap: wrap-reverse !important; }
+  .flex-nowrap { flex-wrap: nowrap !important; }
+  
+  // Grid
+  .grid { display: grid !important; }
+  .inline-grid { display: inline-grid !important; }
+  @for $i from 1 through 12 {
+    .grid-cols-#{$i} { grid-template-columns: repeat(#{$i}, minmax(0, 1fr)) !important; }
+    .col-span-#{$i} { grid-column: span #{$i} / span #{$i} !important; }
+  }
+  
+  // Justify & Align
+  .justify-start { justify-content: flex-start !important; }
+  .justify-end { justify-content: flex-end !important; }
+  .justify-center { justify-content: center !important; }
+  .justify-between { justify-content: space-between !important; }
+  .justify-around { justify-content: space-around !important; }
+  .justify-evenly { justify-content: space-evenly !important; }
+  
+  .items-start { align-items: flex-start !important; }
+  .items-end { align-items: flex-end !important; }
+  .items-center { align-items: center !important; }
+  .items-baseline { align-items: baseline !important; }
+  .items-stretch { align-items: stretch !important; }
+}

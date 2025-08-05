@@ -1,0 +1,193 @@
+/**
+ * Color Utilities
+ * Text, background, and border color utilities with all color scales
+ */
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// Text color utilities
+@each $color-name, $color-scale in $colors {
+  @if type-of($color-scale) == 'map' {
+    @each $shade, $value in $color-scale {
+      .text-#{$color-name}-#{$shade} {
+        color: #{$value} !important;
+      }
+    }
+  } @else {
+    .text-#{$color-name} {
+      color: #{$color-scale} !important;
+    }
+  }
+}
+
+// Surface and text semantic colors
+.text-primary { color: $text-primary !important; }
+.text-secondary { color: $text-secondary !important; }
+.text-tertiary { color: $text-tertiary !important; }
+.text-inverse { color: $text-inverse !important; }
+.text-disabled { color: $text-disabled !important; }
+.text-placeholder { color: $text-placeholder !important; }
+.text-link { color: $text-link !important; }
+.text-link-hover { color: $text-link-hover !important; }
+
+// Background color utilities
+@each $color-name, $color-scale in $colors {
+  @if type-of($color-scale) == 'map' {
+    @each $shade, $value in $color-scale {
+      .bg-#{$color-name}-#{$shade} {
+        background-color: #{$value} !important;
+      }
+    }
+  } @else {
+    .bg-#{$color-name} {
+      background-color: #{$color-scale} !important;
+    }
+  }
+}
+
+// Surface semantic colors
+.bg-background { background-color: $surface-background !important; }
+.bg-foreground { background-color: $surface-foreground !important; }
+.bg-card { background-color: $surface-card !important; }
+.bg-popover { background-color: $surface-popover !important; }
+.bg-modal { background-color: $surface-modal !important; }
+.bg-hover { background-color: $surface-hover !important; }
+.bg-pressed { background-color: $surface-pressed !important; }
+.bg-focus { background-color: $surface-focus !important; }
+
+// Border color utilities
+@each $color-name, $color-scale in $colors {
+  @if type-of($color-scale) == 'map' {
+    @each $shade, $value in $color-scale {
+      .border-#{$color-name}-#{$shade} {
+        border-color: #{$value} !important;
+      }
+    }
+  } @else {
+    .border-#{$color-name} {
+      border-color: #{$color-scale} !important;
+    }
+  }
+}
+
+// Border semantic colors
+.border-border { border-color: $surface-border !important; }
+.border-divider { border-color: $surface-divider !important; }
+
+// Special colors
+.text-transparent { color: transparent !important; }
+.text-current { color: currentColor !important; }
+.text-inherit { color: inherit !important; }
+
+.bg-transparent { background-color: transparent !important; }
+.bg-current { background-color: currentColor !important; }
+.bg-inherit { background-color: inherit !important; }
+
+.border-transparent { border-color: transparent !important; }
+.border-current { border-color: currentColor !important; }
+.border-inherit { border-color: inherit !important; }
+
+// Opacity utilities for colors
+@for $i from 0 through 100 {
+  @if $i % 5 == 0 {
+    .text-opacity-#{$i} {
+      --tw-text-opacity: #{$i / 100};
+      color: rgb(from currentColor r g b / var(--tw-text-opacity)) !important;
+    }
+    
+    .bg-opacity-#{$i} {
+      --tw-bg-opacity: #{$i / 100};
+      background-color: rgb(from currentColor r g b / var(--tw-bg-opacity)) !important;
+    }
+    
+    .border-opacity-#{$i} {
+      --tw-border-opacity: #{$i / 100};
+      border-color: rgb(from currentColor r g b / var(--tw-border-opacity)) !important;
+    }
+  }
+}
+
+// Gradient utilities
+.bg-gradient-to-t {
+  background-image: linear-gradient(to top, var(--tw-gradient-stops)) !important;
+}
+.bg-gradient-to-tr {
+  background-image: linear-gradient(to top right, var(--tw-gradient-stops)) !important;
+}
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops)) !important;
+}
+.bg-gradient-to-br {
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)) !important;
+}
+.bg-gradient-to-b {
+  background-image: linear-gradient(to bottom, var(--tw-gradient-stops)) !important;
+}
+.bg-gradient-to-bl {
+  background-image: linear-gradient(to bottom left, var(--tw-gradient-stops)) !important;
+}
+.bg-gradient-to-l {
+  background-image: linear-gradient(to left, var(--tw-gradient-stops)) !important;
+}
+.bg-gradient-to-tl {
+  background-image: linear-gradient(to top left, var(--tw-gradient-stops)) !important;
+}
+
+// Gradient color stops
+@each $color-name, $color-scale in $colors {
+  @if type-of($color-scale) == 'map' {
+    @each $shade, $value in $color-scale {
+      .from-#{$color-name}-#{$shade} {
+        --tw-gradient-from: #{$value};
+        --tw-gradient-to: rgb(from #{$value} r g b / 0);
+        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+      }
+      
+      .via-#{$color-name}-#{$shade} {
+        --tw-gradient-to: rgb(from #{$value} r g b / 0);
+        --tw-gradient-stops: var(--tw-gradient-from), #{$value}, var(--tw-gradient-to);
+      }
+      
+      .to-#{$color-name}-#{$shade} {
+        --tw-gradient-to: #{$value};
+      }
+    }
+  }
+}
+
+// Responsive variants
+@include responsive-utilities {
+  // Text colors
+  @each $color-name, $color-scale in $colors {
+    @if type-of($color-scale) == 'map' {
+      @each $shade, $value in $color-scale {
+        .text-#{$color-name}-#{$shade} {
+          color: #{$value} !important;
+        }
+      }
+    }
+  }
+  
+  // Background colors
+  @each $color-name, $color-scale in $colors {
+    @if type-of($color-scale) == 'map' {
+      @each $shade, $value in $color-scale {
+        .bg-#{$color-name}-#{$shade} {
+          background-color: #{$value} !important;
+        }
+      }
+    }
+  }
+  
+  // Border colors
+  @each $color-name, $color-scale in $colors {
+    @if type-of($color-scale) == 'map' {
+      @each $shade, $value in $color-scale {
+        .border-#{$color-name}-#{$shade} {
+          border-color: #{$value} !important;
+        }
+      }
+    }
+  }
+}
