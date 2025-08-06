@@ -1,5 +1,10 @@
 # 🎨 Intelligent Theming System
 
+[![npm version](https://badge.fury.io/js/utility-css-library.svg)](https://badge.fury.io/js/utility-css-library)
+[![Downloads](https://img.shields.io/npm/dm/utility-css-library.svg)](https://www.npmjs.com/package/utility-css-library)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Release](https://img.shields.io/github/release/SuryaKavutarapu/utility-css-library.svg)](https://github.com/SuryaKavutarapu/utility-css-library/releases)
+
 A modern, production-ready utility CSS library with intelligent theming, automatic contrast calculation, and seamless dark/light mode support.
 
 ## ✨ Features
@@ -36,7 +41,13 @@ A modern, production-ready utility CSS library with intelligent theming, automat
 ### Installation
 
 ```bash
-npm install @organization/design-system
+npm install utility-css-library
+```
+
+**Or with Yarn:**
+
+```bash
+yarn add utility-css-library
 ```
 
 ### Basic Usage
@@ -45,7 +56,7 @@ npm install @organization/design-system
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="node_modules/@organization/design-system/dist/main.css">
+    <link rel="stylesheet" href="node_modules/utility-css-library/dist/main.css">
 </head>
 <body>
     <!-- Semantic color buttons with automatic contrast -->
@@ -56,7 +67,7 @@ npm install @organization/design-system
     <!-- Theme toggle -->
     <button onclick="toggleMode()">Toggle Dark/Light</button>
     
-    <script src="node_modules/@organization/design-system/dist/main.js"></script>
+    <script src="node_modules/utility-css-library/dist/main.js"></script>
     <script>
         function toggleMode() {
             if (window.themeManager) {
@@ -71,7 +82,7 @@ npm install @organization/design-system
 ### TypeScript Usage
 
 ```typescript
-import { ThemeManager, TokenManager, DesignTokens } from '@organization/design-system';
+import { ThemeManager, TokenManager, DesignTokens } from 'utility-css-library';
 
 // Initialize theme management
 const themeManager = new ThemeManager();
