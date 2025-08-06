@@ -50,6 +50,17 @@ npm install utility-css-library
 yarn add utility-css-library
 ```
 
+### Verify Installation
+
+After installation, you can verify the package is working by importing it:
+
+```javascript
+// Test the package
+import { ThemeManager } from 'utility-css-library';
+const themeManager = new ThemeManager();
+console.log('Theme Manager initialized:', themeManager.getCurrentMode());
+```
+
 ### Basic Usage
 
 ```html
@@ -236,12 +247,20 @@ src/
 
 ## 🎨 Demo
 
-Visit the [live demo](dist/index.html) to see all features in action:
+Visit the [live demo](https://suryakavutarapu.github.io/utility-css-library) to see all features in action:
 
 - Interactive color demonstrations
 - Real-time theme switching
 - Typography system showcase
 - Responsive design examples
+
+## 📦 Package Information
+
+- **Package**: [utility-css-library](https://www.npmjs.com/package/utility-css-library)
+- **Version**: 1.0.0
+- **Size**: 1.8 MB (packed) / 6.6 MB (unpacked)
+- **Files**: 50 files including CSS, JS, TypeScript definitions
+- **Dependencies**: @mdi/js, @mdi/svg for Material Design Icons
 
 ## 🤝 Contributing
 
