@@ -81,7 +81,7 @@ module.exports = (env, argv) => {
           ],
         },
         {
-          test: /\.(png|jpe?g|gif|svg|ico)$/i,
+          test: /\.(png|jpe?g|gif|ico)$/i,
           type: 'asset',
           parser: {
             dataUrlCondition: {
@@ -90,6 +90,27 @@ module.exports = (env, argv) => {
           },
           generator: {
             filename: 'assets/images/[name].[hash][ext]',
+          },
+        },
+        {
+          test: /\.svg$/,
+          exclude: /node_modules\/@mdi/,
+          type: 'asset',
+          parser: {
+            dataUrlCondition: {
+              maxSize: 8 * 1024, // 8kb
+            },
+          },
+          generator: {
+            filename: 'assets/images/[name].[hash][ext]',
+          },
+        },
+        {
+          test: /\.svg$/,
+          include: /node_modules\/@mdi/,
+          type: 'asset/resource',
+          generator: {
+            filename: 'assets/icons/mdi/[name].[hash][ext]',
           },
         },
         {
@@ -126,9 +147,15 @@ module.exports = (env, argv) => {
       },
     },
     devServer: {
-      static: {
-        directory: path.join(__dirname, 'public'),
-      },
+      static: [
+        {
+          directory: path.join(__dirname, 'public'),
+        },
+        {
+          directory: path.join(__dirname, 'node_modules/@mdi'),
+          publicPath: '/node_modules/@mdi',
+        },
+      ],
       compress: true,
       port: 3000,
       hot: true,

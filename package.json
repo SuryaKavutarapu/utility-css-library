@@ -1,15 +1,16 @@
 {
-  "name": "@organization/design-system",
+  "name": "utility-css-library",
   "version": "1.0.0",
   "description": "Modern utility CSS library with intelligent theming, automatic contrast calculation, and seamless dark/light mode support",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "style": "dist/styles/main.css",
+  "main": "dist/main.609f3c40ff3449d8acfd.js",
+  "types": "dist/types/index.d.ts",
+  "style": "dist/main.6f98b86dcbce78e55ea1.css",
   "sass": "src/styles/main.scss",
   "files": [
     "dist/",
     "src/styles/",
     "src/tokens/",
+    "src/components/",
     "README.md",
     "LICENSE"
   ],
@@ -46,18 +47,19 @@
     "css-custom-properties",
     "theme-switching",
     "responsive-design",
-    "modern-css"
+    "modern-css",
+    "vanilla-javascript"
   ],
-  "author": "Your Organization",
+  "author": "Navya Sutari",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-org/design-system.git"
+    "url": "https://github.com/SuryaKavutarapu/utility-css-library.git"
   },
   "bugs": {
-    "url": "https://github.com/your-org/design-system/issues"
+    "url": "https://github.com/SuryaKavutarapu/utility-css-library/issues"
   },
-  "homepage": "https://github.com/your-org/design-system#readme",
+  "homepage": "https://github.com/SuryaKavutarapu/utility-css-library#readme",
   "devDependencies": {
     "@types/node": "^20.6.3",
     "autoprefixer": "^10.4.15",
@@ -91,5 +93,9 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@mdi/js": "^7.4.47",
+    "@mdi/svg": "^7.4.47"
   }
 }

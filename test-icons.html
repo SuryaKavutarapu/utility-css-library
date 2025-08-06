@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Test</title>
+    <style>
+        .test-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Icon Test</h1>
+    <div id="test-container"></div>
+    
+    <script type="module">
+        // Wait for the design system to load
+        function waitForDesignSystem() {
+            return new Promise((resolve) => {
+                if (window.DesignSystem && window.DesignSystem.MaterialIcons) {
+                    resolve(window.DesignSystem.MaterialIcons);
+                } else {
+                    setTimeout(() => waitForDesignSystem().then(resolve), 100);
+                }
+            });
+        }
+        
+        waitForDesignSystem().then((MaterialIcons) => {
+            console.log('MaterialIcons available:', MaterialIcons);
+            console.log('Available methods:', Object.keys(MaterialIcons));
+            
+            const container = document.getElementById('test-container');
+            
+            // Test icon creation
+            try {
+                const homeIcon = MaterialIcons.create('mdiHome', { size: 'md' });
+                container.appendChild(homeIcon.getElement());
+                container.appendChild(document.createTextNode(' Home icon created successfully!'));
+                console.log('✅ Icon creation successful');
+            } catch (error) {
+                container.innerHTML = 'Error creating icon: ' + error.message;
+                console.error('❌ Icon creation failed:', error);
+            }
+        });
+    </script>
+    
+    <!-- Include the main bundle -->
+    <script src="/main.js"></script>
+</body>
+</html>

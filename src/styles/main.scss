@@ -11,6 +11,9 @@
 // Components
 @use 'components';
 
+// Icons
+@use '../icons/icons';
+
 // Utility framework (loaded last for highest specificity)
 @use 'utilities';
 

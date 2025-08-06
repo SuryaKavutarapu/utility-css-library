@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Debug Test</title>
+    <style>
+        .debug-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #333;
+            background: #f9f9f9;
+        }
+        .test-icon {
+            width: 24px;
+            height: 24px;
+            background: red;
+            display: inline-block;
+            margin: 5px;
+        }
+    </style>
+    <script src="main.js"></script>
+</head>
+<body>
+    <h1>Icon System Debug Test</h1>
+    
+    <div class="debug-section">
+        <h2>Test 1: Direct Icon Creation</h2>
+        <div id="direct-icon-test">
+            <p>Direct icon should appear here:</p>
+            <div id="direct-icon-container"></div>
+        </div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>Test 2: Placeholder Replacement</h2>
+        <p>These spans should be replaced with icons:</p>
+        <span data-icon="mdiHome" class="test-icon">HOME</span>
+        <span data-icon="mdiStar" class="test-icon">STAR</span>
+        <span data-icon="mdiHeart" class="test-icon">HEART</span>
+    </div>
+    
+    <div class="debug-section">
+        <h2>Test 3: Console Output</h2>
+        <p>Check the browser console for detailed output.</p>
+    </div>
+
+    <script>
+        console.log('🔧 Debug page loaded');
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 DOM loaded, testing icon system...');
+            
+            // Wait for design system to load
+            function testIconSystem() {
+                if (typeof window.DesignSystem === 'undefined') {
+                    console.log('⏳ DesignSystem not ready, waiting...');
+                    setTimeout(testIconSystem, 100);
+                    return;
+                }
+                
+                console.log('✅ DesignSystem available:', window.DesignSystem);
+                
+                const { MaterialIcons, IconUtils } = window.DesignSystem;
+                
+                if (!MaterialIcons) {
+                    console.error('❌ MaterialIcons not available');
+                    return;
+                }
+                
+                if (!IconUtils) {
+                    console.error('❌ IconUtils not available');
+                    return;
+                }
+                
+                // Test 1: Direct icon creation
+                try {
+                    console.log('🧪 Test 1: Creating direct icon...');
+                    const icon = MaterialIcons.create('mdiHome', { size: 'md' });
+                    const element = icon.getElement();
+                    console.log('Icon element:', element);
+                    console.log('Icon HTML:', element.outerHTML);
+                    
+                    const container = document.getElementById('direct-icon-container');
+                    container.appendChild(element);
+                    console.log('✅ Test 1 passed: Direct icon created and inserted');
+                } catch (error) {
+                    console.error('❌ Test 1 failed:', error);
+                }
+                
+                // Test 2: Placeholder replacement
+                try {
+                    console.log('🧪 Test 2: Replacing placeholders...');
+                    const placeholders = document.querySelectorAll('[data-icon]');
+                    console.log(`Found ${placeholders.length} placeholders:`, placeholders);
+                    
+                    IconUtils.replacePlaceholders(document.body);
+                    
+                    const remainingPlaceholders = document.querySelectorAll('[data-icon]');
+                    console.log(`Remaining placeholders: ${remainingPlaceholders.length}`);
+                    
+                    const iconElements = document.querySelectorAll('.mdi-icon');
+                    console.log(`Found ${iconElements.length} icon elements`);
+                    
+                    if (remainingPlaceholders.length === 0 && iconElements.length > 0) {
+                        console.log('✅ Test 2 passed: Placeholders replaced successfully');
+                    } else {
+                        console.log('⚠️ Test 2 partial: Some placeholders may not have been replaced');
+                    }
+                } catch (error) {
+                    console.error('❌ Test 2 failed:', error);
+                }
+            }
+            
+            testIconSystem();
+        });
+    </script>
+</body>
+</html>
