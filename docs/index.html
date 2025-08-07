@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utility CSS Library - Intelligent Theming System</title>
+    <meta name="description" content="A modern, production-ready utility CSS library with intelligent theming, automatic contrast calculation, and seamless dark/light mode support.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#6C5CE7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Utility CSS Docs">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../dist/main.css">
+    <link rel="stylesheet" href="./styles/docs.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+</head>
+<body class="bg-background text-foreground">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="text-2xl">🎨</div>
+                    <div>
+                        <h1 class="text-xl font-bold text-primary">Utility CSS Library</h1>
+                        <p class="text-xs text-muted">Intelligent Theming System</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-foreground hover:text-primary transition-colors">Features</a>
+                    <a href="#colors" class="text-foreground hover:text-primary transition-colors">Colors</a>
+                    <a href="#components" class="text-foreground hover:text-primary transition-colors">Components</a>
+                    <a href="#examples" class="text-foreground hover:text-primary transition-colors">Examples</a>
+                    <a href="#docs" class="text-foreground hover:text-primary transition-colors">Docs</a>
+                </div>
+                
+                <!-- Theme Toggle & GitHub -->
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-secondary hover:bg-secondary/80 transition-colors">
+                        <span id="theme-icon">🌙</span>
+                    </button>
+                    <a href="https://github.com/SuryaKavutarapu/utility-css-library" 
+                       class="btn btn-primary text-sm px-4 py-2">
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-primary/5 to-interactive/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center">
+                <div class="inline-flex items-center px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-8">
+                    🚀 v1.0.0 Now Available on npm
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary to-interactive bg-clip-text text-transparent mb-6">
+                    Intelligent Theming System
+                </h1>
+                
+                <p class="text-xl text-muted max-w-3xl mx-auto mb-12">
+                    A modern, production-ready utility CSS library with automatic contrast calculation, 
+                    seamless dark/light mode support, and 7000+ Material Design Icons.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                    <button onclick="copyInstallCommand()" class="btn btn-primary text-lg px-8 py-4">
+                        Get Started
+                    </button>
+                    <a href="#features" class="btn btn-secondary text-lg px-8 py-4">
+                        Explore Features
+                    </a>
+                </div>
+                
+                <!-- Install Command -->
+                <div class="relative max-w-md mx-auto">
+                    <div class="bg-secondary/50 rounded-lg p-4 text-left">
+                        <code class="text-sm font-mono text-primary">npm install utility-css-library</code>
+                        <button onclick="copyInstallCommand()" class="absolute right-2 top-2 p-2 text-muted hover:text-foreground">
+                            📋
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Animated Background -->
+        <div class="absolute inset-0 -z-10">
+            <div class="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div class="absolute top-40 right-20 w-72 h-72 bg-interactive/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-8 left-40 w-72 h-72 bg-success/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Powerful Features</h2>
+                <p class="text-xl text-muted max-w-2xl mx-auto">
+                    Everything you need to build modern, accessible interfaces with intelligent theming.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Intelligent Theming -->
+                <div class="bg-card rounded-xl p-8 border border-border hover:border-primary/30 transition-colors">
+                    <div class="text-4xl mb-4">🎯</div>
+                    <h3 class="text-xl font-semibold mb-3">Intelligent Theming</h3>
+                    <p class="text-muted mb-4">
+                        Automatic contrast calculation ensures optimal readability. Colors automatically generate the perfect foreground text color.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="btn btn-warning text-sm">Warning (Auto Black Text)</div>
+                        <div class="btn btn-doom text-sm">Doom (Auto White Text)</div>
+                    </div>
+                </div>
+                
+                <!-- Dark/Light Mode -->
+                <div class="bg-card rounded-xl p-8 border border-border hover:border-primary/30 transition-colors">
+                    <div class="text-4xl mb-4">🌙</div>
+                    <h3 class="text-xl font-semibold mb-3">Dark/Light Mode</h3>
+                    <p class="text-muted mb-4">
+                        System preference detection with smooth transitions. Toggle themes programmatically or let users choose.
+                    </p>
+                    <button onclick="window.themeManager?.toggleMode()" class="btn btn-interactive text-sm">
+                        Toggle Theme
+                    </button>
+                </div>
+                
+                <!-- Material Design Icons -->
+                <div class="bg-card rounded-xl p-8 border border-border hover:border-primary/30 transition-colors">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h3 class="text-xl font-semibold mb-3">7000+ Icons</h3>
+                    <p class="text-muted mb-4">
+                        Complete Material Design Icons integration with TypeScript support and efficient icon registry.
+                    </p>
+                    <div class="flex space-x-2">
+                        <span class="mdi-icon mdi-icon--sm" data-icon="home"></span>
+                        <span class="mdi-icon mdi-icon--sm" data-icon="heart"></span>
+                        <span class="mdi-icon mdi-icon--sm" data-icon="star"></span>
+                        <span class="mdi-icon mdi-icon--sm" data-icon="settings"></span>
+                    </div>
+                </div>
+                
+                <!-- TypeScript Support -->
+                <div class="bg-card rounded-xl p-8 border border-border hover:border-primary/30 transition-colors">
+                    <div class="text-4xl mb-4">🏗️</div>
+                    <h3 class="text-xl font-semibold mb-3">TypeScript Ready</h3>
+                    <p class="text-muted mb-4">
+                        Complete type definitions, theme management classes, and scientific contrast algorithms.
+                    </p>
+                    <code class="text-xs bg-secondary/50 px-2 py-1 rounded">ThemeManager</code>
+                </div>
+                
+                <!-- Utility Classes -->
+                <div class="bg-card rounded-xl p-8 border border-border hover:border-primary/30 transition-colors">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="text-xl font-semibold mb-3">500+ Utilities</h3>
+                    <p class="text-muted mb-4">
+                        Comprehensive utility classes for colors, typography, layout, spacing, and more.
+                    </p>
+                    <div class="flex space-x-2 text-xs">
+                        <span class="bg-primary/20 px-2 py-1 rounded">.text-primary</span>
+                        <span class="bg-success/20 px-2 py-1 rounded">.btn-success</span>
+                    </div>
+                </div>
+                
+                <!-- Performance -->
+                <div class="bg-card rounded-xl p-8 border border-border hover:border-primary/30 transition-colors">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-xl font-semibold mb-3">Optimized</h3>
+                    <p class="text-muted mb-4">
+                        Production-ready with minimal dependencies. Theme switching in under 16ms.
+                    </p>
+                    <div class="text-sm text-success">~240KB Bundle Size</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Color System Demo -->
+    <section id="colors" class="py-20 bg-secondary/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Intelligent Color System</h2>
+                <p class="text-xl text-muted max-w-2xl mx-auto">
+                    7 semantic colors with automatic contrast calculation and opacity variants.
+                </p>
+            </div>
+            
+            <!-- Color Palette -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-card rounded-lg p-6 border border-border">
+                    <div class="w-full h-20 bg-primary rounded-lg mb-4 flex items-center justify-center text-white font-medium">
+                        Primary
+                    </div>
+                    <h4 class="font-semibold mb-2">Primary</h4>
+                    <p class="text-sm text-muted mb-3">#6C5CE7 - Purple for primary actions</p>
+                    <div class="flex space-x-1">
+                        <div class="w-8 h-8 bg-primary-10 rounded"></div>
+                        <div class="w-8 h-8 bg-primary-30 rounded"></div>
+                        <div class="w-8 h-8 bg-primary-50 rounded"></div>
+                        <div class="w-8 h-8 bg-primary-70 rounded"></div>
+                        <div class="w-8 h-8 bg-primary rounded"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-card rounded-lg p-6 border border-border">
+                    <div class="w-full h-20 bg-success rounded-lg mb-4 flex items-center justify-center text-white font-medium">
+                        Success
+                    </div>
+                    <h4 class="font-semibold mb-2">Success</h4>
+                    <p class="text-sm text-muted mb-3">#37B26C - Green for positive actions</p>
+                    <div class="flex space-x-1">
+                        <div class="w-8 h-8 bg-success-10 rounded"></div>
+                        <div class="w-8 h-8 bg-success-30 rounded"></div>
+                        <div class="w-8 h-8 bg-success-50 rounded"></div>
+                        <div class="w-8 h-8 bg-success-70 rounded"></div>
+                        <div class="w-8 h-8 bg-success rounded"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-card rounded-lg p-6 border border-border">
+                    <div class="w-full h-20 bg-warning rounded-lg mb-4 flex items-center justify-center text-black font-medium">
+                        Warning
+                    </div>
+                    <h4 class="font-semibold mb-2">Warning</h4>
+                    <p class="text-sm text-muted mb-3">#E6E35C - Auto black text</p>
+                    <div class="flex space-x-1">
+                        <div class="w-8 h-8 bg-warning-10 rounded"></div>
+                        <div class="w-8 h-8 bg-warning-30 rounded"></div>
+                        <div class="w-8 h-8 bg-warning-50 rounded"></div>
+                        <div class="w-8 h-8 bg-warning-70 rounded"></div>
+                        <div class="w-8 h-8 bg-warning rounded"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-card rounded-lg p-6 border border-border">
+                    <div class="w-full h-20 bg-critical rounded-lg mb-4 flex items-center justify-center text-white font-medium">
+                        Critical
+                    </div>
+                    <h4 class="font-semibold mb-2">Critical</h4>
+                    <p class="text-sm text-muted mb-3">#E62E5C - Red for errors</p>
+                    <div class="flex space-x-1">
+                        <div class="w-8 h-8 bg-critical-10 rounded"></div>
+                        <div class="w-8 h-8 bg-critical-30 rounded"></div>
+                        <div class="w-8 h-8 bg-critical-50 rounded"></div>
+                        <div class="w-8 h-8 bg-critical-70 rounded"></div>
+                        <div class="w-8 h-8 bg-critical rounded"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Interactive Demo -->
+            <div class="bg-card rounded-xl p-8 border border-border">
+                <h3 class="text-2xl font-semibold mb-6">Interactive Color Demo</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button class="btn btn-primary">Primary Button</button>
+                    <button class="btn btn-success">Success Button</button>
+                    <button class="btn btn-warning">Warning Button</button>
+                    <button class="btn btn-critical">Critical Button</button>
+                    <button class="btn btn-interactive">Interactive</button>
+                    <button class="btn btn-doom">Doom Button</button>
+                    <button class="btn btn-white">White Button</button>
+                    <button class="btn btn-secondary">Secondary</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Component Examples -->
+    <section id="components" class="py-20 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Component Examples</h2>
+                <p class="text-xl text-muted max-w-2xl mx-auto">
+                    Real-world examples showcasing the power of intelligent theming.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Card Component -->
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-semibold">Card Components</h3>
+                    
+                    <div class="bg-card rounded-xl p-6 border border-border hover:border-primary/30 transition-colors">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                                <span class="mdi-icon mdi-icon--sm text-white" data-icon="rocket"></span>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-semibold mb-2">Feature Card</h4>
+                                <p class="text-muted mb-4">
+                                    This card demonstrates automatic contrast and hover states.
+                                </p>
+                                <button class="btn btn-primary text-sm">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-success to-interactive rounded-xl p-6 text-white">
+                        <h4 class="text-lg font-semibold mb-2">Gradient Card</h4>
+                        <p class="text-white/80 mb-4">
+                            Beautiful gradients with automatic text contrast.
+                        </p>
+                        <button class="btn btn-white text-success text-sm">Get Started</button>
+                    </div>
+                </div>
+                
+                <!-- Form Components -->
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-semibold">Form Elements</h3>
+                    
+                    <div class="bg-card rounded-xl p-6 border border-border">
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Email Address</label>
+                                <input type="email" 
+                                       class="w-full px-4 py-2 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-colors"
+                                       placeholder="your@email.com">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Message</label>
+                                <textarea rows="3" 
+                                          class="w-full px-4 py-2 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-colors resize-none"
+                                          placeholder="Your message..."></textarea>
+                            </div>
+                            
+                            <div class="flex space-x-3">
+                                <button type="submit" class="btn btn-primary flex-1">
+                                    Submit
+                                </button>
+                                <button type="button" class="btn btn-secondary">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Examples -->
+    <section id="examples" class="py-20 bg-secondary/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Code Examples</h2>
+                <p class="text-xl text-muted max-w-2xl mx-auto">
+                    See how easy it is to build with intelligent theming.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- HTML Example -->
+                <div class="bg-card rounded-xl border border-border overflow-hidden">
+                    <div class="bg-secondary/50 px-6 py-3 border-b border-border">
+                        <h3 class="text-lg font-semibold">HTML Usage</h3>
+                    </div>
+                    <div class="p-6">
+                        <pre class="text-sm overflow-x-auto"><code class="language-html">&lt;!-- Automatic contrast calculation --&gt;
+&lt;button class="btn btn-warning"&gt;
+  Warning (Black Text)
+&lt;/button&gt;
+
+&lt;button class="btn btn-doom"&gt;
+  Doom (White Text)
+&lt;/button&gt;
+
+&lt;!-- Material Design Icons --&gt;
+&lt;span class="mdi-icon mdi-icon--lg" 
+      data-icon="heart"&gt;&lt;/span&gt;
+
+&lt;!-- Opacity variants --&gt;
+&lt;div class="bg-primary-30 p-4"&gt;
+  30% opacity background
+&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+                
+                <!-- TypeScript Example -->
+                <div class="bg-card rounded-xl border border-border overflow-hidden">
+                    <div class="bg-secondary/50 px-6 py-3 border-b border-border">
+                        <h3 class="text-lg font-semibold">TypeScript Usage</h3>
+                    </div>
+                    <div class="p-6">
+                        <pre class="text-sm overflow-x-auto"><code class="language-typescript">import { ThemeManager } from 'utility-css-library';
+
+// Initialize theme management
+const themeManager = new ThemeManager();
+
+// Toggle theme
+themeManager.toggleMode();
+
+// Get current theme
+const mode = themeManager.getCurrentMode();
+
+// Subscribe to changes
+themeManager.subscribe((newMode) => {
+  console.log(`Theme: ${newMode}`);
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Installation -->
+            <div class="mt-12 bg-card rounded-xl border border-border overflow-hidden">
+                <div class="bg-secondary/50 px-6 py-3 border-b border-border">
+                    <h3 class="text-lg font-semibold">Installation & Setup</h3>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-sm font-semibold text-muted mb-3 uppercase tracking-wide">Package Manager</h4>
+                            <pre class="text-sm bg-secondary/50 p-4 rounded-lg"><code># npm
+npm install utility-css-library
+
+# yarn
+yarn add utility-css-library
+
+# pnpm
+pnpm add utility-css-library</code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-muted mb-3 uppercase tracking-wide">Include in HTML</h4>
+                            <pre class="text-sm bg-secondary/50 p-4 rounded-lg"><code class="language-html">&lt;link rel="stylesheet" 
+      href="node_modules/utility-css-library/dist/main.css"&gt;
+
+&lt;script src="node_modules/utility-css-library/dist/main.js"&gt;&lt;/script&gt;</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Links -->
+    <section id="docs" class="py-20 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Documentation & Resources</h2>
+                <p class="text-xl text-muted max-w-2xl mx-auto">
+                    Everything you need to get started and master the library.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <a href="https://github.com/SuryaKavutarapu/utility-css-library" 
+                   class="bg-card rounded-xl p-8 border border-border hover:border-primary/30 transition-colors group">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">📚</div>
+                    <h3 class="text-xl font-semibold mb-3">Documentation</h3>
+                    <p class="text-muted">
+                        Complete API reference, examples, and best practices guide.
+                    </p>
+                </a>
+                
+                <a href="https://www.npmjs.com/package/utility-css-library" 
+                   class="bg-card rounded-xl p-8 border border-border hover:border-primary/30 transition-colors group">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">📦</div>
+                    <h3 class="text-xl font-semibold mb-3">npm Package</h3>
+                    <p class="text-muted">
+                        Official package on npm registry with version history and stats.
+                    </p>
+                </a>
+                
+                <a href="https://github.com/SuryaKavutarapu/utility-css-library/releases" 
+                   class="bg-card rounded-xl p-8 border border-border hover:border-primary/30 transition-colors group">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🚀</div>
+                    <h3 class="text-xl font-semibold mb-3">Releases</h3>
+                    <p class="text-muted">
+                        Latest releases, changelogs, and migration guides.
+                    </p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary/50 border-t border-border py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="text-2xl">🎨</div>
+                        <span class="text-lg font-bold">Utility CSS Library</span>
+                    </div>
+                    <p class="text-muted text-sm">
+                        Intelligent theming system for modern web applications.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-muted hover:text-foreground transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-muted hover:text-foreground transition-colors">Examples</a></li>
+                        <li><a href="#" class="text-muted hover:text-foreground transition-colors">GitHub</a></li>
+                        <li><a href="#" class="text-muted hover:text-foreground transition-colors">npm Package</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Community</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-muted hover:text-foreground transition-colors">Issues</a></li>
+                        <li><a href="#" class="text-muted hover:text-foreground transition-colors">Discussions</a></li>
+                        <li><a href="#" class="text-muted hover:text-foreground transition-colors">Contributing</a></li>
+                        <li><a href="#" class="text-muted hover:text-foreground transition-colors">Changelog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-muted hover:text-foreground transition-colors">MIT License</a></li>
+                        <li><a href="#" class="text-muted hover:text-foreground transition-colors">Privacy</a></li>
+                        <li><a href="#" class="text-muted hover:text-foreground transition-colors">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-border mt-8 pt-8 text-center text-sm text-muted">
+                <p>Built with ❤️ for accessible, intelligent design systems.</p>
+                <p class="mt-2">© 2025 Utility CSS Library. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../dist/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="./scripts/docs.js"></script>
+</body>
+</html>
